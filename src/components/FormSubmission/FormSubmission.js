@@ -1,18 +1,34 @@
 import React, { useState } from "react";
-import FormInput from "@/Components/Project/FormInput";
-import SubmissionList from "@/Components/Project/SubmissionList";
+import FormInput from "@/Components/FormSubmission/FormInput";
+import SubmissionList from "@/Components/FormSubmission/SubmissionList";
 
 export default function FormSubmission() {
   const [form, setForm] = useState({ name: "", lastName: "", email: "" });
+  const [formErrors, setFormErrors] = useState({});
   const [submissions, setSubmissions] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+
+    // Clear individual error on typing
+    setFormErrors({ ...formErrors, [e.target.name]: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate fields
+    const errors = {};
+    if (!form.name.trim()) errors.name = "Please enter your name.";
+    if (!form.lastName.trim()) errors.lastName = "Please enter your last name.";
+    if (!form.email.trim()) errors.email = "Please enter your email.";
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return; // stop submission
+    }
+
     if (editIndex !== null) {
       const updatedSubmissions = [...submissions];
       updatedSubmissions[editIndex] = form;
@@ -21,7 +37,9 @@ export default function FormSubmission() {
     } else {
       setSubmissions([...submissions, form]);
     }
+
     setForm({ name: "", lastName: "", email: "" });
+    setFormErrors({});
   };
 
   const handleEdit = (index) => {
@@ -31,17 +49,19 @@ export default function FormSubmission() {
 
   const handleReset = () => {
     setForm({ name: "", lastName: "", email: "" });
+    setFormErrors({});
     setEditIndex(null);
   };
 
   const handlePrefill = () => {
     setForm({ name: "Umar", lastName: "Nazir", email: "umarnazir@gmail.com" });
+    setFormErrors({});
     setEditIndex(null);
   };
 
   const handleDelete = (indexToDelete) => {
     if (submissions.length <= 1) {
-      alert("sorry you can not clear last one.");
+      alert("Sorry, you cannot clear the last one.");
       return;
     }
     const updatedSubmissions = submissions.filter((_, index) => index !== indexToDelete);
@@ -55,6 +75,7 @@ export default function FormSubmission() {
     <div className="container">
       <FormInput
         form={form}
+        formErrors={formErrors}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handlePrefill={handlePrefill}
@@ -71,6 +92,7 @@ export default function FormSubmission() {
           handleReset={handleReset}
         />
       )}
+
     </div>
   );
 }

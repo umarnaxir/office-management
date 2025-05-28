@@ -1,6 +1,14 @@
 import React from "react";
 
-export default function FormInput({ form, handleChange, handleSubmit, handlePrefill, handleReset, editIndex }) {
+export default function FormInput({
+  form,
+  formErrors,
+  handleChange,
+  handleSubmit,
+  handlePrefill,
+  handleReset,
+  editIndex,
+}) {
   return (
     <form onSubmit={handleSubmit} className="form">
       <div className="form-group">
@@ -11,10 +19,14 @@ export default function FormInput({ form, handleChange, handleSubmit, handlePref
             name="name"
             value={form.name}
             onChange={handleChange}
-            required
+            style={{
+              borderColor: formErrors.name ? "red" : "#ccc",
+            }}
           />
         </label>
+        {formErrors.name && <p style={{ color: "red" }}>{formErrors.name}</p>}
       </div>
+
       <div className="form-group">
         <label>
           Last Name:
@@ -23,10 +35,14 @@ export default function FormInput({ form, handleChange, handleSubmit, handlePref
             name="lastName"
             value={form.lastName}
             onChange={handleChange}
-            required
+            style={{
+              borderColor: formErrors.lastName ? "red" : "#ccc",
+            }}
           />
         </label>
+        {formErrors.lastName && <p style={{ color: "red" }}>{formErrors.lastName}</p>}
       </div>
+
       <div className="form-group">
         <label>
           Email:
@@ -35,10 +51,14 @@ export default function FormInput({ form, handleChange, handleSubmit, handlePref
             name="email"
             value={form.email}
             onChange={handleChange}
-            required
+            style={{
+              borderColor: formErrors.email ? "red" : "#ccc",
+            }}
           />
         </label>
+        {formErrors.email && <p style={{ color: "red" }}>{formErrors.email}</p>}
       </div>
+
       <div className="form-actions">
         <button type="submit">{editIndex !== null ? "Resubmit" : "Submit"}</button>
         <button type="button" onClick={handlePrefill}>Prefill</button>

@@ -1,10 +1,12 @@
 import React from "react";
-import ProjectFormSubmission from "@/Components/Project/FormSubmission"
+import FormSubmission from "@/Components/FormSubmission/FormSubmission";
+import Form from "@/Components/ContactForm/Form"
 import "@/styles/Form.css";
 export default function Home() {
   return (
     <div>
-      <ProjectFormSubmission/>
+      <FormSubmission/>
+      <Form/>
     </div>
   );
 }
