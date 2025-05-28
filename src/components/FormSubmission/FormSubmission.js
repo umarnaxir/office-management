@@ -3,22 +3,31 @@ import FormInput from "@/Components/FormSubmission/FormInput";
 import SubmissionList from "@/Components/FormSubmission/SubmissionList";
 
 export default function FormSubmission() {
+  // Initial form state
   const [form, setForm] = useState({ name: "", lastName: "", email: "" });
+
+  // To track field-specific errors
   const [formErrors, setFormErrors] = useState({});
+
+  // Array of submission entries
   const [submissions, setSubmissions] = useState([]);
+
+  // Track which submission is being edited
   const [editIndex, setEditIndex] = useState(null);
 
+  // Handle input field changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
-    // Clear individual error on typing
+    // Clear individual error as user types
     setFormErrors({ ...formErrors, [e.target.name]: "" });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate fields
+    // Validation
     const errors = {};
     if (!form.name.trim()) errors.name = "Please enter your name.";
     if (!form.lastName.trim()) errors.lastName = "Please enter your last name.";
@@ -26,39 +35,46 @@ export default function FormSubmission() {
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      return; // stop submission
+      return; // stop if validation fails
     }
 
     if (editIndex !== null) {
+      // Edit existing entry
       const updatedSubmissions = [...submissions];
       updatedSubmissions[editIndex] = form;
       setSubmissions(updatedSubmissions);
       setEditIndex(null);
     } else {
-      setSubmissions([...submissions, form]);
+      // Add new entry at the beginning (recent first)
+      setSubmissions([form, ...submissions]);
     }
 
+    // Reset form after submit
     setForm({ name: "", lastName: "", email: "" });
     setFormErrors({});
   };
 
-  const handleEdit = (index) => {
-    setForm(submissions[index]);
-    setEditIndex(index);
-  };
-
-  const handleReset = () => {
-    setForm({ name: "", lastName: "", email: "" });
-    setFormErrors({});
-    setEditIndex(null);
-  };
-
+  // Prefill dummy data
   const handlePrefill = () => {
     setForm({ name: "Umar", lastName: "Nazir", email: "umarnazir@gmail.com" });
     setFormErrors({});
     setEditIndex(null);
   };
 
+  // Reset form state
+  const handleReset = () => {
+    setForm({ name: "", lastName: "", email: "" });
+    setFormErrors({});
+    setEditIndex(null);
+  };
+
+  // Load selected submission into form
+  const handleEdit = (index) => {
+    setForm(submissions[index]);
+    setEditIndex(index);
+  };
+
+  // Delete specific submission
   const handleDelete = (indexToDelete) => {
     if (submissions.length <= 1) {
       alert("Sorry, you cannot clear the last one.");
@@ -71,6 +87,9 @@ export default function FormSubmission() {
     }
   };
 
+  // Determine if all form fields are filled
+  const isFormComplete = form.name.trim() && form.lastName.trim() && form.email.trim();
+
   return (
     <div className="container">
       <FormInput
@@ -81,6 +100,7 @@ export default function FormSubmission() {
         handlePrefill={handlePrefill}
         handleReset={handleReset}
         editIndex={editIndex}
+        isFormComplete={!!isFormComplete}
       />
 
       {submissions.length > 0 && (
@@ -92,7 +112,6 @@ export default function FormSubmission() {
           handleReset={handleReset}
         />
       )}
-
     </div>
   );
 }

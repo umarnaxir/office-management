@@ -8,6 +8,7 @@ export default function FormInput({
   handlePrefill,
   handleReset,
   editIndex,
+  isFormComplete,
 }) {
   return (
     <form onSubmit={handleSubmit} className="form">
@@ -40,7 +41,9 @@ export default function FormInput({
             }}
           />
         </label>
-        {formErrors.lastName && <p style={{ color: "red" }}>{formErrors.lastName}</p>}
+        {formErrors.lastName && (
+          <p style={{ color: "red" }}>{formErrors.lastName}</p>
+        )}
       </div>
 
       <div className="form-group">
@@ -60,9 +63,15 @@ export default function FormInput({
       </div>
 
       <div className="form-actions">
-        <button type="submit">{editIndex !== null ? "Resubmit" : "Submit"}</button>
-        <button type="button" onClick={handlePrefill}>Prefill</button>
-        <button type="button" onClick={handleReset}>Reset</button>
+        <button type="submit" disabled={!isFormComplete}>
+          {editIndex !== null ? "Resubmit" : "Submit"}
+        </button>
+        <button type="button" onClick={handlePrefill}>
+          Prefill
+        </button>
+        <button type="button" onClick={handleReset}>
+          Reset
+        </button>
       </div>
     </form>
   );

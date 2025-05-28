@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <FormSubmission/>
-      <Form/>
+      {/* <Form/> */}
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React from "react";
 
+const generateUUID = () => Math.random().toString(36).substring(2) + Date.now().toString(36);
+
 export default function SubmissionList({ submissions, handleEdit, handleDelete, editIndex, handleReset }) {
   return (
     <div>
@@ -8,7 +10,7 @@ export default function SubmissionList({ submissions, handleEdit, handleDelete, 
         const isUmar = entry.name === "Umar";
 
         return (
-          <div key={index} className="submission-entry">
+          <div key={generateUUID()} className="submission-entry">
             <div className="submission-actions">
               <button onClick={() => handleEdit(index)} title="Edit">Edit</button>
               <button onClick={() => handleDelete(index)} title="Delete">Clear</button>
