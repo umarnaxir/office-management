@@ -8,7 +8,8 @@ export default function FormInput({
   handlePrefill,
   handleReset,
   editIndex,
-  isFormComplete,
+  isChecked,
+  handleCheckboxChange
 }) {
   return (
     <form onSubmit={handleSubmit} className="form">
@@ -20,9 +21,7 @@ export default function FormInput({
             name="name"
             value={form.name}
             onChange={handleChange}
-            style={{
-              borderColor: formErrors.name ? "red" : "#ccc",
-            }}
+            style={{ borderColor: formErrors.name ? "red" : "#ccc" }}
           />
         </label>
         {formErrors.name && <p style={{ color: "red" }}>{formErrors.name}</p>}
@@ -36,14 +35,10 @@ export default function FormInput({
             name="lastName"
             value={form.lastName}
             onChange={handleChange}
-            style={{
-              borderColor: formErrors.lastName ? "red" : "#ccc",
-            }}
+            style={{ borderColor: formErrors.lastName ? "red" : "#ccc" }}
           />
         </label>
-        {formErrors.lastName && (
-          <p style={{ color: "red" }}>{formErrors.lastName}</p>
-        )}
+        {formErrors.lastName && <p style={{ color: "red" }}>{formErrors.lastName}</p>}
       </div>
 
       <div className="form-group">
@@ -54,24 +49,31 @@ export default function FormInput({
             name="email"
             value={form.email}
             onChange={handleChange}
-            style={{
-              borderColor: formErrors.email ? "red" : "#ccc",
-            }}
+            style={{ borderColor: formErrors.email ? "red" : "#ccc" }}
           />
         </label>
         {formErrors.email && <p style={{ color: "red" }}>{formErrors.email}</p>}
       </div>
 
+      {/* Checkbox Block */}
+      <div className="form-group checkbox-group">
+        <label style={{ fontWeight: "bold", userSelect: "none" }}>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+            style={{ marginRight: "10px", transform: "scale(1.2)" }}
+          />
+          Fill the above details then tick the check box
+        </label>
+      </div>
+
       <div className="form-actions">
-        <button type="submit" disabled={!isFormComplete}>
+        <button type="submit" disabled={!isChecked}>
           {editIndex !== null ? "Resubmit" : "Submit"}
         </button>
-        <button type="button" onClick={handlePrefill}>
-          Prefill
-        </button>
-        <button type="button" onClick={handleReset}>
-          Reset
-        </button>
+        <button type="button" onClick={handlePrefill}>Prefill</button>
+        <button type="button" onClick={handleReset}>Reset</button>
       </div>
     </form>
   );

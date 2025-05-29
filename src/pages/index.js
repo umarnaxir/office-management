@@ -5,7 +5,7 @@ import "@/styles/Form.css";
 export default function Home() {
   return (
     <div>
-      <FormSubmission/>
+      {/* <FormSubmission/> */}
       {/* <Form/> */}
     </div>
   );
