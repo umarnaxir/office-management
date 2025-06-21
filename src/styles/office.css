@@ -1,0 +1,924 @@
+/* home start */
+/* Reset and base styles */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #0a0a0a;
+  min-height: 100vh;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+/* App container */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation styles */
+.main-navigation {
+  background-color: #111111;
+  border-bottom: 1px solid #333333;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  text-decoration: none;
+  color: #cccccc;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border-color: #444444;
+}
+
+.nav-link--active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Hero section */
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #888888;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Dashboard grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Dashboard cards */
+.dashboard-card {
+  background-color: #161616;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.2s ease;
+}
+
+.dashboard-card:hover {
+  background-color: #1a1a1a;
+  border-color: #444444;
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #ffffff;
+}
+
+.card-description {
+  color: #aaaaaa;
+  margin-bottom: 1.8rem;
+  font-size: 0.95rem;
+}
+
+.card-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.card-button:hover {
+  background-color: #1d4ed8;
+}
+
+.button-arrow {
+  font-size: 0.8rem;
+}
+
+/* Card specific styling */
+.dashboard-card--employees .card-icon { color: #10b981; }
+.dashboard-card--accounting .card-icon { color: #f59e0b; }
+.dashboard-card--tasks .card-icon { color: #3b82f6; }
+.dashboard-card--data .card-icon { color: #8b5cf6; }
+
+.dashboard-card--employees:hover { border-color: #10b981; }
+.dashboard-card--accounting:hover { border-color: #f59e0b; }
+.dashboard-card--tasks:hover { border-color: #3b82f6; }
+.dashboard-card--data:hover { border-color: #8b5cf6; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-navigation {
+    padding: 1rem;
+  }
+  
+  .nav-list {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .nav-link {
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .main-content {
+    padding: 2rem 1rem;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .dashboard-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .dashboard-card {
+    padding: 1.2rem;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* Focus states for accessibility */
+.nav-link:focus,
+.card-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Selection styling */
+::selection {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+/* home end */
+/* Accounting Component Styles */
+.accounting-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #0a0a0a;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #ffffff;
+}
+
+.accounting-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.accounting-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: #161616;
+  border: 1px solid #333333;
+  border-radius: 8px;
+}
+
+.action-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.expense-btn {
+  background-color: #dc2626;
+  color: white;
+}
+
+.expense-btn:hover {
+  background-color: #b91c1c;
+}
+
+.purchase-btn {
+  background-color: #059669;
+  color: white;
+}
+
+.purchase-btn:hover {
+  background-color: #047857;
+}
+
+.credit-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.credit-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.report-btn {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.report-btn:hover {
+  background-color: #6d28d9;
+}
+
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.report-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.transaction-list-wrapper {
+  background-color: #161616;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+/* TransactionList Component Styles */
+.transaction-list-container {
+  width: 100%;
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: #161616;
+  border: 1px solid #333333;
+}
+
+.transaction-list-title {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid #333333;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.table-header {
+  background-color: #2563eb;
+}
+
+.header-row {
+  border: none;
+}
+
+.header-cell {
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  padding: 1.2rem 1rem;
+  text-align: left;
+  border: none;
+}
+
+.table-body {
+  background-color: #1a1a1a;
+}
+
+.table-row {
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #333333;
+}
+
+.table-row:hover {
+  background-color: #222222;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.data-cell {
+  padding: 1rem;
+  color: #cccccc;
+  font-size: 0.95rem;
+  border: none;
+  vertical-align: middle;
+}
+
+.date-cell {
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.type-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.expense-badge {
+  background-color: #dc2626;
+  color: white;
+}
+
+.purchase-badge {
+  background-color: #059669;
+  color: white;
+}
+
+.credit-badge {
+  background-color: #2563eb;
+  color: white;
+}
+
+.description-cell {
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+.amount-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.expense-amount {
+  color: #ef4444;
+}
+
+.purchase-amount {
+  color: #eab308;
+}
+
+.credit-amount {
+  color: #22c55e;
+}
+
+.party-cell {
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.delete-btn {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.delete-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .accounting-container {
+    padding: 1rem;
+  }
+  
+  .accounting-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .accounting-actions {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .action-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .transaction-list-wrapper,
+  .transaction-list-container {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounting-container {
+    padding: 0.5rem;
+  }
+  
+  .accounting-title {
+    font-size: 1.8rem;
+  }
+  
+  .accounting-actions {
+    padding: 1rem;
+  }
+  
+  .action-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .transaction-list-wrapper,
+  .transaction-list-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .transaction-list-title {
+    font-size: 1.5rem;
+  }
+  
+  .header-cell,
+  .data-cell {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .description-cell {
+    max-width: 120px;
+  }
+  
+  .type-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  
+  .amount-value {
+    font-size: 1rem;
+  }
+  
+  .delete-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-cell,
+  .data-cell {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.8rem;
+  }
+  
+  .transaction-table {
+    font-size: 0.85rem;
+  }
+  
+  .description-column,
+  .party-column {
+    display: none;
+  }
+  
+  .description-cell,
+  .party-cell {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .transaction-list-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .type-column {
+    display: none;
+  }
+  
+  .type-cell {
+    display: none;  
+  }
+  
+  .header-cell,
+  .data-cell {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Focus states for accessibility */
+.action-btn:focus,
+.delete-btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Selection styling */
+::selection {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+/* start add expensis */
+/* Transaction Form Styles */
+.transaction-form {
+  background-color: #161616;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Form header */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333333;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.form-type-indicator {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-type-indicator--expense {
+  background-color: #dc2626;
+  color: white;
+}
+
+.form-type-indicator--purchase {
+  background-color: #059669;
+  color: white;
+}
+
+.form-type-indicator--credit {
+  background-color: #2563eb;
+  color: white;
+}
+
+/* Form content */
+.transaction-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #cccccc;
+  font-size: 0.9rem;
+}
+
+.form-input {
+  padding: 0.8rem 1rem;
+  border: 1px solid #444444;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  background-color: #222222;
+}
+
+.form-input::placeholder {
+  color: #666666;
+}
+
+/* Amount input wrapper */
+.amount-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 1rem;
+  color: #888888;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.form-input--amount {
+  padding-left: 2.5rem;
+}
+
+/* Input type specific styles */
+.form-input--date {
+  color-scheme: dark;
+}
+
+.form-input--date::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333333;
+}
+
+.form-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex: 1;
+  justify-content: center;
+}
+
+.form-button--submit {
+  color: white;
+}
+
+.form-button--submit.form-button--expense {
+  background-color: #dc2626;
+}
+
+.form-button--submit.form-button--expense:hover {
+  background-color: #b91c1c;
+}
+
+.form-button--submit.form-button--purchase {
+  background-color: #059669;
+}
+
+.form-button--submit.form-button--purchase:hover {
+  background-color: #047857;
+}
+
+.form-button--submit.form-button--credit {
+  background-color: #2563eb;
+}
+
+.form-button--submit.form-button--credit:hover {
+  background-color: #1d4ed8;
+}
+
+.form-button--cancel {
+  background-color: #374151;
+  color: #ffffff;
+}
+
+.form-button--cancel:hover {
+  background-color: #4b5563;
+}
+
+.button-icon {
+  font-size: 1rem;
+}
+
+/* Form type specific border colors */
+.transaction-form--expense {
+  border-left: 4px solid #dc2626;
+}
+
+.transaction-form--purchase {
+  border-left: 4px solid #059669;
+}
+
+.transaction-form--credit {
+  border-left: 4px solid #2563eb;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .transaction-form {
+    padding: 1.5rem;
+    max-width: 95%;
+  }
+  
+  .form-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .form-title {
+    font-size: 1.3rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-button {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .transaction-form {
+    padding: 1rem;
+    max-width: 98%;
+  }
+  
+  .form-title {
+    font-size: 1.2rem;
+  }
+  
+  .form-input {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-button {
+    padding: 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Focus states for accessibility */
+.form-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Form validation states */
+.form-input:invalid {
+  border-color: #dc2626;
+}
+
+.form-input:valid {
+  border-color: #059669;
+}
+
+/* Loading state */
+.form-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-button:disabled:hover {
+  background-color: inherit;
+}
+/* end add expensis */
+/* employ management start */
+
+/* employ management end */
