@@ -4,6 +4,8 @@
   import '../styles/Dashboard.css'; 
   import '../styles/Navbar.css';  
   import '../styles/Expense.css'; 
+  import '../styles/payslips.css'; 
+
 
   const MyApp = ({ Component, pageProps }) => {
     return (

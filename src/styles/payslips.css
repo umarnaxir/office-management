@@ -1,0 +1,539 @@
+/* Simplified Payslip Management System - CSS */
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+/* App Container */
+.payslip-app {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.app-title {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Main Content Layout */
+.main-content {
+  padding: 30px;
+}
+
+/* Forms Container - Desktop Layout */
+.forms-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .forms-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Form Container Styles */
+.form-container {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  height: fit-content;
+}
+
+.form-title {
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
+}
+
+/* Form Sections */
+.form-section {
+  background: white;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.section-title {
+  color: white;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  text-align: center;
+  margin: -20px -20px 15px -20px;
+}
+
+/* Form Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.form-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 576px) {
+  .form-grid-two {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form Group Styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e9ecef;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Button Styles */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  margin: 5px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+/* Form Actions */
+.form-actions {
+  text-align: center;
+  padding: 15px 0;
+  border-top: 1px solid #e9ecef;
+  margin-top: 15px;
+}
+
+/* Preview Container */
+.preview-container {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.preview-title {
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
+}
+
+/* Payslip Preview Styles */
+.payslip-preview {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.payslip-document {
+  background: white;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.payslip-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  text-align: center;
+}
+
+.payslip-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.payslip-header p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.payslip-content {
+  padding: 25px;
+}
+
+.payslip-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #667eea;
+}
+
+.payslip-section h3 {
+  color: #495057;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 6px;
+}
+
+.payslip-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 576px) {
+  .payslip-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.info-value {
+  color: #6c757d;
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* Earnings and Deductions */
+.earnings-deductions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .earnings-deductions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.earnings-section,
+.deductions-section {
+  background: white;
+  border-radius: 6px;
+  padding: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.earnings-section h4 {
+  color: #28a745;
+  background: #d4edda;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.deductions-section h4 {
+  color: #dc3545;
+  background: #f8d7da;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.amount-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.amount-item:last-child {
+  border-bottom: none;
+}
+
+.amount-label {
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.amount-value {
+  font-weight: 600;
+  color: #212529;
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Net Salary Summary */
+.net-salary-summary {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.net-salary-summary h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.net-salary-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+/* Amount in Words */
+.amount-in-words {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 12px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.words-label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.words-text {
+  font-size: 1rem;
+  color: #6c757d;
+  text-transform: capitalize;
+  font-style: italic;
+}
+
+/* Footer */
+.payslip-footer {
+  background: #f8f9fa;
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid #dee2e6;
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.empty-message {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.empty-submessage {
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payslip-app {
+    padding: 10px;
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .app-title {
+    font-size: 1.5rem;
+    padding: 20px;
+  }
+  
+  .form-container,
+  .preview-container {
+    padding: 20px;
+  }
+  
+  .payslip-content {
+    padding: 20px;
+  }
+  
+  .payslip-header {
+    padding: 20px;
+  }
+  
+  .payslip-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .payslip-app {
+    padding: 0;
+  }
+  
+  .app-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  .main-content {
+    padding: 0;
+  }
+  
+  .forms-container {
+    display: none;
+  }
+  
+  .preview-container {
+    padding: 0;
+    background: white;
+    border: none;
+  }
+  
+  body {
+    background: white;
+  }
+  
+  .payslip-document {
+    page-break-inside: avoid;
+  }
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 10px; }
+.mb-2 { margin-bottom: 20px; }
+.mt-1 { margin-top: 10px; }
+.mt-2 { margin-top: 20px; }
+
+/* Currency Display */
+.currency-display {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+}
+
+.rupee-symbol {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+}
