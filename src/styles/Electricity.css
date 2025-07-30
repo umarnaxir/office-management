@@ -1,0 +1,110 @@
+/* General page styling */
+.page-electricity-bills {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+/* Form styling */
+.electricity-bill-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group input[type="file"] {
+  padding: 3px;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+.form-actions button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.form-actions button:hover {
+  background: #2980b9;
+}
+
+/* Table styling */
+.table-electricity-bills {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-electricity-bills th,
+.table-electricity-bills td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-electricity-bills th {
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+.table-electricity-bills tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.table-electricity-bills tr:hover {
+  background: #f1f1f1;
+}
+
+.table-electricity-bills select {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.table-electricity-bills button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.table-electricity-bills button:hover {
+  background: #c0392b;
+}

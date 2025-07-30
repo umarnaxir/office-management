@@ -8,7 +8,7 @@ const ElectricityBillList = ({ bills, onStatusChange, onDelete }) => {
       <table className="table-electricity-bills">
         <thead>
           <tr>
-            <th>Month</th>
+            <th>Date</th>
             <th>Amount</th>
             <th>Bill File</th>
             <th>Status</th>

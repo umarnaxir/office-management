@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LeaveForm from '../components/LeaveForm';
-import LeaveList from '../components/LeaveList';
+import LeaveForm from '../components/LeaveTracter/LeaveForm';
+import LeaveList from '../components/LeaveTracter/LeaveList';
 
 const LeaveTracker = () => {
   const [leaves, setLeaves] = useState([]);

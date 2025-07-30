@@ -338,3 +338,17 @@ body {
 .print-btn:hover {
   background-color: var(--secondary-color);
 }
+/* Add to existing CSS */
+
+/* Update table styles to accommodate new Type column */
+.expense-table th:nth-child(5),
+.expense-table td:nth-child(5) {
+  text-transform: capitalize;
+}
+
+/* Ensure responsive table handles new column */
+@media (max-width: 768px) {
+  .expense-table {
+    min-width: 600px; /* Adjust for additional column */
+  }
+}

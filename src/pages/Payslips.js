@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PayslipForm from '../components/PayslipForm';
-import PayslipList from '../components/PayslipList';
-import PayslipPreview from '../components/PayslipPreview';
+import PayslipForm from '../components/Payslip/PayslipForm';
+import PayslipList from '../components/Payslip/PayslipList';
+import PayslipPreview from '../components/Payslip/PayslipPreview';
 
 const Payslips = () => {
   const [payslips, setPayslips] = useState([]);

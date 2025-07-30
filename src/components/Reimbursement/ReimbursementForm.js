@@ -29,17 +29,32 @@ const ReimbursementForm = ({ onSave }) => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Employee Name:</label>
-          <input type="text" name="employeeName" value={formData.employeeName} onChange={handleChange} required />
+          <input type="text" name="employeeName" placeholder="Enter your name" value={formData.employeeName} onChange={handleChange} required />
         </div>
 
         <div className="form-group">
           <label>Description:</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} required />
+          <input type="text" name="description" placeholder="Enter a brief description" value={formData.description} onChange={handleChange} required />
         </div>
 
         <div className="form-group">
           <label>Amount:</label>
-          <input type="number" name="amount" value={formData.amount} onChange={handleChange} required />
+          <input type="number" name="amount" placeholder="Enter the amount" value={formData.amount} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <label>Category:</label>
+        <select type="text" name="category" value={formData.category} onChange={handleChange} required>
+          <option value="">Select Category</option>
+          <option value="travel">Food</option>
+          <option value="food">Tools</option>
+          <option value="supplies">Supplies</option>
+          <option value="other">Other</option>
+        </select>
+        </div>
+
+        <div className='form-group'>
+          <label>Date:</label>
+          <input type="date" name="date" placeholder="Select a date" value={formData.date} onChange={handleChange} required />
         </div>
 
         <div className="form-group">

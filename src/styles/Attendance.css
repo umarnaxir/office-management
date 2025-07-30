@@ -1,0 +1,156 @@
+/* General Container Styling */
+.attmgmt-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Page Title */
+.attmgmt-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Attendance Form */
+.attmgmt-form-container {
+  background: #dbe9f7;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.attmgmt-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.attmgmt-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.attmgmt-form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.attmgmt-form-label {
+  font-weight: 500;
+  color: #374151;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.attmgmt-form-input,
+.attmgmt-form-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.attmgmt-form-input:focus,
+.attmgmt-form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.attmgmt-form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.attmgmt-submit-button {
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.attmgmt-submit-button:hover {
+  background: #059669;
+}
+
+/* Attendance Table */
+.attmgmt-attendance-table {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.attmgmt-table-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.attmgmt-table-attendance {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attmgmt-table-attendance th,
+.attmgmt-table-attendance td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.attmgmt-table-attendance th {
+  background: #e5e7eb;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.attmgmt-table-row:hover {
+  background: #f3f4f6;
+}
+
+.attmgmt-delete-button {
+  background: #ef4444;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.attmgmt-delete-button:hover {
+  background: #dc2626;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .attmgmt-form {
+    flex-direction: column;
+  }
+
+  .attmgmt-table-attendance th,
+  .attmgmt-table-attendance td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .attmgmt-form-container {
+    padding: 16px;
+  }
+
+  .attmgmt-form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,267 @@
+/* General Container Styling */
+.empmgmt-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Page Title */
+.empmgmt-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Dashboard Grid */
+.empmgmt-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.empmgmt-stat-card {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.empmgmt-stat-blue {
+  background: #dbeafe;
+}
+
+.empmgmt-stat-green {
+  background: #d1fae5;
+}
+
+.empmgmt-stat-yellow {
+  background: #fef3c7;
+}
+
+.empmgmt-stat-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.empmgmt-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Search and Filter */
+.empmgmt-search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.empmgmt-search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.empmgmt-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.empmgmt-filter-select {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.empmgmt-filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.empmgmt-add-button {
+  background: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.empmgmt-add-button:hover {
+  background: #2563eb;
+}
+
+/* Employee Form */
+.empmgmt-employee-form {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.empmgmt-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.empmgmt-form-group {
+  margin-bottom: 16px;
+}
+
+.empmgmt-form-label {
+  font-weight: 500;
+  color: #374151;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.empmgmt-form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.empmgmt-form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.empmgmt-form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.empmgmt-save-button {
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.empmgmt-save-button:hover {
+  background: #059669;
+}
+
+.empmgmt-cancel-button {
+  background: #ef4444;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.empmgmt-cancel-button:hover {
+  background: #dc2626;
+}
+
+/* Employee List */
+.empmgmt-employee-list {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.empmgmt-list-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.empmgmt-table-employee {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.empmgmt-table-employee th,
+.empmgmt-table-employee td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.empmgmt-table-employee th {
+  background: #e5e7eb;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.empmgmt-table-row:hover {
+  background: #f3f4f6;
+}
+
+.empmgmt-edit-button {
+  background: #3b82f6;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.empmgmt-edit-button:hover {
+  background: #2563eb;
+}
+
+.empmgmt-delete-button {
+  background: #ef4444;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.empmgmt-delete-button:hover {
+  background: #dc2626;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .empmgmt-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empmgmt-search-filter {
+    flex-direction: column;
+  }
+
+  .empmgmt-table-employee th,
+  .empmgmt-table-employee td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .empmgmt-employee-form {
+    padding: 16px;
+  }
+
+  .empmgmt-form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

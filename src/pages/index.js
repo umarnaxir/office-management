@@ -122,7 +122,7 @@ const Dashboard = () => {
               </div>
             </Link>
 
-            <Link href="/ExpenseCategories" className="dashboard-link">
+            <Link href="/Expenses" className="dashboard-link">
               <div className="dashboard-card expense-categories-card">
                 <PieChart size={48} className="card-icon icon-red" />
                 <div className="card-content">
@@ -177,7 +177,7 @@ const Dashboard = () => {
             <p>© Office Management System 2025. All Rights Reserved.</p>
             <p>
               Crafted with <Heart size={16} className="heart-icon" /> in Kashmir by{" "}
-              <span className="developer-name">Umar Nazir</span>
+              <span className="developer-name">Saibbyweb</span>
             </p>
           </div>
         </footer>

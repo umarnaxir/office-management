@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ElectricityBillForm from '../components/ElectricityBillForm';
-import ElectricityBillList from '../components/ElectricityBillList';
+import ElectricityBillForm from '../components/Electricity/ElectricityBillForm';
+import ElectricityBillList from '../components/Electricity/ElectricityBillList';
 
 const ElectricityBills = () => {
   const [bills, setBills] = useState([]);

@@ -32,7 +32,14 @@ const LeaveForm = ({ onSave }) => {
 
         <div className="form-group">
           <label>Leave Type:</label>
-          <input type="text" name="leaveType" value={formData.leaveType} onChange={handleChange} required />
+          <select name="leaveType" value={formData.leaveType} onChange={handleChange} required>
+            <option value="">-- Select Leave Type --</option>
+            <option value="Casual Leave">Casual Leave</option>
+            <option value="Paid Leave">Paid Leave</option>
+            <option value="Unpaid Leave">Unpaid Leave</option>
+            <option value="Medical Leave">Medical Leave</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <div className="form-group">

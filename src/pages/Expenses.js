@@ -1,39 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import ExpenseForm from '../components/ExpenseForm';
-import ExpenseList from '../components/ExpenseList';
-import ExpenseSummary from '../components/ExpenseSummary';
+import ExpenseForm from '../components/Expenses/ExpenseForm';
+import ExpenseList from '../components/Expenses/ExpenseList';
+import ExpenseSummary from '../components/Expenses/ExpenseSummary';
 
-// Create a custom hook for localStorage access
-const useLocalStorage = (key, initialValue) => {
-  const [storedValue, setStoredValue] = useState(() => {
-    if (typeof window === 'undefined') {
-      return initialValue;
-    }
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.error(error);
-      return initialValue;
-    }
-  });
+// Mock JSON file content (in a real app, this would be read from a file via API)
+const initialJsonData = [];
 
-  const setValue = (value) => {
+// Custom hook to simulate JSON file operations
+const useJsonFile = (initialData) => {
+  const [data, setData] = useState(initialData);
+
+  // Simulate reading JSON file on mount
+  useEffect(() => {
+    // In a real app, fetch from backend API (e.g., /api/expenses)
+    // For demo, use localStorage as a fallback or mock data
     try {
-      setStoredValue(value);
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(value));
+      const storedData = localStorage.getItem('expensesJson');
+      if (storedData) {
+        setData(JSON.parse(storedData));
+      } else {
+        setData(initialData);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error reading JSON data:', error);
+    }
+  }, []);
+
+  // Simulate writing to JSON file
+  const saveData = (newData) => {
+    try {
+      setData(newData);
+      // In a real app, send to backend API to write to expenses.json
+      localStorage.setItem('expensesJson', JSON.stringify(newData));
+    } catch (error) {
+      console.error('Error saving JSON data:', error);
     }
   };
 
-  return [storedValue, setValue];
+  return [data, saveData];
 };
 
 const Expense = () => {
-  const [expenses, setExpenses] = useLocalStorage('officeExpenses', []);
+  const [expenses, setExpenses] = useJsonFile(initialJsonData);
 
   const addExpense = (expense) => {
     setExpenses([...expenses, { ...expense, id: Date.now() }]);

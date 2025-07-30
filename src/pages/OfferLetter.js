@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import OfferLetterForm from '../components/OfferLetterForm';
-import OfferLetterList from '../components/OfferLetterList';
+import OfferLetterForm from '../components/OfferLetter/OfferLetterForm';
+import OfferLetterList from '../components/OfferLetter/OfferLetterList';
 
 const OfferLetters = () => {
   const [letters, setLetters] = useState([]);

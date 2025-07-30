@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ReimbursementForm from '../components/ReimbursementForm';
-import ReimbursementList from '../components/ReimbursementList';
+import ReimbursementForm from '../components/Reimbursement/ReimbursementForm';
+import ReimbursementList from '../components/Reimbursement/ReimbursementList';
 
 const Reimbursements = () => {
   const [reimbursements, setReimbursements] = useState([]);
@@ -19,7 +19,6 @@ const Reimbursements = () => {
 
   return (
     <div className="page-reimbursements">
-      <h1>Reimbursements</h1>
 
       <ReimbursementForm onSave={addReimbursement} />
 

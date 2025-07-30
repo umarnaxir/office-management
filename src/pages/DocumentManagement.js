@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DocumentUploadForm from '../components/DocumentUploadForm';
-import DocumentList from '../components/DocumentUploadList';
+import DocumentUploadForm from '../components/DocumentManagement/DocumentUploadForm';
+import DocumentList from '../components/DocumentManagement/DocumentUploadList';
 
 const DocumentManagement = () => {
   const [documents, setDocuments] = useState([]);

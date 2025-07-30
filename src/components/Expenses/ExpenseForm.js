@@ -5,7 +5,8 @@ const ExpenseForm = ({ onSave }) => {
     date: new Date().toISOString().split('T')[0],
     category: '',
     description: '',
-    amount: ''
+    amount: '',
+    type: 'debit', // Default to debit
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -13,7 +14,6 @@ const ExpenseForm = ({ onSave }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user types
     if (formErrors[name]) {
       setFormErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -24,8 +24,9 @@ const ExpenseForm = ({ onSave }) => {
     if (!formData.category) errors.category = 'Category is required';
     if (!formData.description) errors.description = 'Description is required';
     if (!formData.amount) errors.amount = 'Amount is required';
-    if (isNaN(formData.amount)) errors.amount = 'Amount must be a number';
-    
+    if (isNaN(formData.amount) || formData.amount <= 0) errors.amount = 'Amount must be a positive number';
+    if (!formData.type) errors.type = 'Transaction type is required';
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -35,13 +36,14 @@ const ExpenseForm = ({ onSave }) => {
     if (validateForm()) {
       onSave({
         ...formData,
-        amount: parseFloat(formData.amount).toFixed(2)
+        amount: parseFloat(formData.amount).toFixed(2),
       });
       setFormData({
         date: new Date().toISOString().split('T')[0],
         category: '',
         description: '',
-        amount: ''
+        amount: '',
+        type: 'debit',
       });
     }
   };
@@ -53,22 +55,22 @@ const ExpenseForm = ({ onSave }) => {
       <form onSubmit={handleSubmit} noValidate>
         <div className={`form-group ${formErrors.date ? 'error' : ''}`}>
           <label>Date:</label>
-          <input 
-            type="date" 
-            name="date" 
-            value={formData.date} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
           />
           {formErrors.date && <span className="error-message">{formErrors.date}</span>}
         </div>
 
         <div className={`form-group ${formErrors.category ? 'error' : ''}`}>
           <label>Category:</label>
-          <select 
-            name="category" 
-            value={formData.category} 
-            onChange={handleChange} 
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
             required
           >
             <option value="">Select Category</option>
@@ -87,12 +89,12 @@ const ExpenseForm = ({ onSave }) => {
 
         <div className={`form-group ${formErrors.description ? 'error' : ''}`}>
           <label>Description:</label>
-          <input 
-            type="text" 
-            name="description" 
-            value={formData.description} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
             placeholder="Enter expense details"
           />
           {formErrors.description && <span className="error-message">{formErrors.description}</span>}
@@ -100,17 +102,31 @@ const ExpenseForm = ({ onSave }) => {
 
         <div className={`form-group ${formErrors.amount ? 'error' : ''}`}>
           <label>Amount (₹):</label>
-          <input 
-            type="number" 
-            name="amount" 
-            value={formData.amount} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="number"
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
+            required
             min="0"
             step="0.01"
             placeholder="0.00"
           />
           {formErrors.amount && <span className="error-message">{formErrors.amount}</span>}
+        </div>
+
+        <div className={`form-group ${formErrors.type ? 'error' : ''}`}>
+          <label>Transaction Type:</label>
+          <select
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            required
+          >
+            <option value="debit">Debit</option>
+            <option value="credit">Credit</option>
+          </select>
+          {formErrors.type && <span className="error-message">{formErrors.type}</span>}
         </div>
 
         <div className="form-actions">

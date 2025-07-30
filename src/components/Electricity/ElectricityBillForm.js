@@ -27,8 +27,8 @@ const ElectricityBillForm = ({ onSave }) => {
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Month:</label>
-          <input type="text" name="month" value={formData.month} onChange={handleChange} required />
+          <label>Date:</label>
+          <input type="text" name="date" value={formData.date} onChange={handleChange} required />
         </div>
 
         <div className="form-group">

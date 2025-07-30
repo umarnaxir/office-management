@@ -1,21 +1,13 @@
 import React from 'react';
+import { format } from 'date-fns';
 
 const ExpenseList = ({ expenses, onDelete }) => {
   const formatDate = (dateString) => {
     try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) {
-        return dateString; // Return original if invalid date
-      }
-      
-      // Format as "DD MMM YYYY" (e.g., "15 Jul 2023")
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = date.toLocaleString('default', { month: 'short' });
-      const year = date.getFullYear();
-      return `${day} ${month} ${year}`;
+      return format(new Date(dateString), 'dd MMM yyyy');
     } catch (error) {
       console.error('Error formatting date:', error);
-      return dateString; // Return original if formatting fails
+      return dateString;
     }
   };
 
@@ -23,7 +15,7 @@ const ExpenseList = ({ expenses, onDelete }) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(amount);
   };
 
@@ -55,6 +47,7 @@ const ExpenseList = ({ expenses, onDelete }) => {
               <th>Category</th>
               <th>Description</th>
               <th>Amount (₹)</th>
+              <th>Type</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -66,9 +59,10 @@ const ExpenseList = ({ expenses, onDelete }) => {
                 <td>{expense.category}</td>
                 <td>{expense.description}</td>
                 <td className="amount-cell">{formatCurrency(expense.amount)}</td>
+                <td>{expense.type.charAt(0).toUpperCase() + expense.type.slice(1)}</td>
                 <td>
-                  <button 
-                    onClick={() => onDelete(expense.id)} 
+                  <button
+                    onClick={() => onDelete(expense.id)}
                     className="delete-btn"
                     aria-label={`Delete ${expense.description}`}
                   >
