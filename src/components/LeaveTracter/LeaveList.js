@@ -1,47 +1,80 @@
 import React from 'react';
+import { FileText, Calendar } from 'lucide-react';
 
-const LeaveList = ({ leaves, onStatusChange, onDelete }) => {
+const LeaveList = ({ leaves, onStatusChange, onDelete, onBack }) => {
   return (
-    <div className="leave-list">
-      <h2>Leave Applications</h2>
-
-      <table className="table-leaves">
-        <thead>
-          <tr>
-            <th>Employee</th>
-            <th>Type</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Reason</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {leaves.map(l => (
-            <tr key={l.id}>
-              <td>{l.employeeName}</td>
-              <td>{l.leaveType}</td>
-              <td>{l.fromDate}</td>
-              <td>{l.toDate}</td>
-              <td>{l.reason}</td>
-              <td>
-                <select value={l.status} onChange={(e) => onStatusChange(l.id, e.target.value)}>
-                  <option value="pending">Pending</option>
-                  <option value="approved">Approved</option>
-                  <option value="rejected">Rejected</option>
-                </select>
-              </td>
-              <td>
-                <button onClick={() => onDelete(l.id)}>Delete</button>
-              </td>
-            </tr>
+    <div className="ll-container">
+      <h2 className="ll-section-title">
+        <FileText className="ll-section-icon" />
+        All Leave Requests
+      </h2>
+      
+      <button onClick={onBack} className="ll-back-button">
+        ← Back to Overview
+      </button>
+      
+      {leaves.length === 0 ? (
+        <div className="ll-empty-state">
+          <Calendar className="ll-empty-icon" />
+          <p>No leave requests found.</p>
+        </div>
+      ) : (
+        <div className="ll-leave-table">
+          <div className="ll-table-header">
+            <div>Type</div>
+            <div>Dates</div>
+            <div>Reason</div>
+            <div>Status</div>
+            <div>Actions</div>
+          </div>
+          
+          {leaves.map(leave => (
+            <div key={leave.id} className="ll-table-row">
+              <div>{leave.leaveType}</div>
+              <div>{formatDateRange(leave.startDate, leave.endDate)}</div>
+              <div className="ll-reason-cell">{leave.reason}</div>
+              <div>
+                <span className={`ll-status-badge ll-status-${leave.status}`}>
+                  {leave.status}
+                </span>
+              </div>
+              <div className="ll-actions-cell">
+                {leave.status === 'pending' && (
+                  <>
+                    <button 
+                      onClick={() => onStatusChange(leave.id, 'approved')}
+                      className="ll-approve-btn"
+                    >
+                      Approve
+                    </button>
+                    <button 
+                      onClick={() => onStatusChange(leave.id, 'rejected')}
+                      className="ll-reject-btn"
+                    >
+                      Reject
+                    </button>
+                  </>
+                )}
+                <button 
+                  onClick={() => onDelete(leave.id)}
+                  className="ll-delete-btn"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      )}
     </div>
   );
 };
+
+function formatDateRange(start, end) {
+  if (!start || !end) return '';
+  const startDate = new Date(start).toLocaleDateString();
+  const endDate = new Date(end).toLocaleDateString();
+  return `${startDate} - ${endDate}`;
+}
 
 export default LeaveList;

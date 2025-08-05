@@ -25,7 +25,7 @@ const ExpenseList = ({ expenses, onDelete }) => {
 
   if (expenses.length === 0) {
     return (
-      <div className="no-expenses">
+      <div className="expense-no-expenses">
         <p>No expenses recorded yet. Add your first expense!</p>
       </div>
     );
@@ -33,13 +33,13 @@ const ExpenseList = ({ expenses, onDelete }) => {
 
   return (
     <div className="expense-list-container">
-      <div className="list-actions">
-        <button onClick={handlePrint} className="print-btn">
+      <div className="expense-list-actions">
+        <button onClick={handlePrint} className="expense-print-btn">
           Print Report
         </button>
       </div>
 
-      <div className="table-responsive">
+      <div className="expense-table-responsive">
         <table className="expense-table">
           <thead>
             <tr>
@@ -58,12 +58,12 @@ const ExpenseList = ({ expenses, onDelete }) => {
                 <td>{formatDate(expense.date)}</td>
                 <td>{expense.category}</td>
                 <td>{expense.description}</td>
-                <td className="amount-cell">{formatCurrency(expense.amount)}</td>
+                <td className="expense-amount-cell">{formatCurrency(expense.amount)}</td>
                 <td>{expense.type.charAt(0).toUpperCase() + expense.type.slice(1)}</td>
                 <td>
                   <button
                     onClick={() => onDelete(expense.id)}
-                    className="delete-btn"
+                    className="expense-delete-btn"
                     aria-label={`Delete ${expense.description}`}
                   >
                     Delete

@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Save, X, Calculator, Calendar, Tag, FileText, DollarSign } from 'lucide-react';
 
-const ExpenseForm = ({ onSave }) => {
+const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
-    category: '',
+    category: preSelectedCategory,
     description: '',
     amount: '',
-    type: 'debit', // Default to debit
+    type: 'debit',
   });
 
   const [formErrors, setFormErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (preSelectedCategory) {
+      setFormData(prev => ({ ...prev, category: preSelectedCategory }));
+    }
+  }, [preSelectedCategory]);
+
+  const categories = [
+    'Food Items',
+    'Tea/Coffee', 
+    'Daily Items',
+    'Electricity Bills',
+    'Internet Bills',
+    'Office Supplies',
+    'Maintenance',
+    'Transportation',
+    'Other'
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,22 +42,30 @@ const ExpenseForm = ({ onSave }) => {
   const validateForm = () => {
     const errors = {};
     if (!formData.category) errors.category = 'Category is required';
-    if (!formData.description) errors.description = 'Description is required';
+    if (!formData.description.trim()) errors.description = 'Description is required';
     if (!formData.amount) errors.amount = 'Amount is required';
-    if (isNaN(formData.amount) || formData.amount <= 0) errors.amount = 'Amount must be a positive number';
+    if (isNaN(formData.amount) || parseFloat(formData.amount) <= 0) {
+      errors.amount = 'Amount must be a positive number';
+    }
     if (!formData.type) errors.type = 'Transaction type is required';
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setIsLoading(true);
+      
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       onSave({
         ...formData,
         amount: parseFloat(formData.amount).toFixed(2),
+        description: formData.description.trim(),
       });
+
       setFormData({
         date: new Date().toISOString().split('T')[0],
         category: '',
@@ -45,50 +73,74 @@ const ExpenseForm = ({ onSave }) => {
         amount: '',
         type: 'debit',
       });
+      
+      setIsLoading(false);
     }
+  };
+
+  const handleReset = () => {
+    setFormData({
+      date: new Date().toISOString().split('T')[0],
+      category: preSelectedCategory,
+      description: '',
+      amount: '',
+      type: 'debit',
+    });
+    setFormErrors({});
   };
 
   return (
     <div className="expense-form-card">
-      <h2>Add New Expense</h2>
+      <div className="expense-form-header">
+        <h2>
+          <Calculator className="expense-form-header-icon" />
+          Add New Expense
+        </h2>
+        <p>Track your expenses efficiently</p>
+      </div>
 
-      <form onSubmit={handleSubmit} noValidate>
-        <div className={`form-group ${formErrors.date ? 'error' : ''}`}>
-          <label>Date:</label>
+      <form onSubmit={handleSubmit} noValidate className="expense-form">
+        <div className={`expense-form-group ${formErrors.date ? 'expense-error' : ''}`}>
+          <label>
+            <Calendar size={18} />
+            Date
+          </label>
           <input
             type="date"
             name="date"
             value={formData.date}
             onChange={handleChange}
             required
+            className="expense-input"
           />
-          {formErrors.date && <span className="error-message">{formErrors.date}</span>}
+          {formErrors.date && <span className="expense-error-message">{formErrors.date}</span>}
         </div>
 
-        <div className={`form-group ${formErrors.category ? 'error' : ''}`}>
-          <label>Category:</label>
+        <div className={`expense-form-group ${formErrors.category ? 'expense-error' : ''}`}>
+          <label>
+            <Tag size={18} />
+            Category
+          </label>
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
+            className="expense-select"
           >
             <option value="">Select Category</option>
-            <option value="Food Items">Food Items</option>
-            <option value="Tea/Coffee">Tea/Coffee</option>
-            <option value="Daily Items">Daily Items</option>
-            <option value="Electricity Bills">Electricity Bills</option>
-            <option value="Internet Bills">Internet Bills</option>
-            <option value="Office Supplies">Office Supplies</option>
-            <option value="Maintenance">Maintenance</option>
-            <option value="Transportation">Transportation</option>
-            <option value="Other">Other</option>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
-          {formErrors.category && <span className="error-message">{formErrors.category}</span>}
+          {formErrors.category && <span className="expense-error-message">{formErrors.category}</span>}
         </div>
 
-        <div className={`form-group ${formErrors.description ? 'error' : ''}`}>
-          <label>Description:</label>
+        <div className={`expense-form-group ${formErrors.description ? 'expense-error' : ''}`}>
+          <label>
+            <FileText size={18} />
+            Description
+          </label>
           <input
             type="text"
             name="description"
@@ -96,12 +148,16 @@ const ExpenseForm = ({ onSave }) => {
             onChange={handleChange}
             required
             placeholder="Enter expense details"
+            className="expense-input"
           />
-          {formErrors.description && <span className="error-message">{formErrors.description}</span>}
+          {formErrors.description && <span className="expense-error-message">{formErrors.description}</span>}
         </div>
 
-        <div className={`form-group ${formErrors.amount ? 'error' : ''}`}>
-          <label>Amount (₹):</label>
+        <div className={`expense-form-group ${formErrors.amount ? 'expense-error' : ''}`}>
+          <label>
+            <DollarSign size={18} />
+            Amount (₹)
+          </label>
           <input
             type="number"
             name="amount"
@@ -111,27 +167,57 @@ const ExpenseForm = ({ onSave }) => {
             min="0"
             step="0.01"
             placeholder="0.00"
+            className="expense-input"
           />
-          {formErrors.amount && <span className="error-message">{formErrors.amount}</span>}
+          {formErrors.amount && <span className="expense-error-message">{formErrors.amount}</span>}
         </div>
 
-        <div className={`form-group ${formErrors.type ? 'error' : ''}`}>
-          <label>Transaction Type:</label>
-          <select
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            required
+        <div className={`expense-form-group ${formErrors.type ? 'expense-error' : ''}`}>
+          <label>Transaction Type</label>
+          <div className="expense-radio-group">
+            <label className="expense-radio-label">
+              <input
+                type="radio"
+                name="type"
+                value="debit"
+                checked={formData.type === 'debit'}
+                onChange={handleChange}
+              />
+              <span className="expense-radio-custom expense-debit"></span>
+              Debit (Expense)
+            </label>
+            <label className="expense-radio-label">
+              <input
+                type="radio"
+                name="type"
+                value="credit"
+                checked={formData.type === 'credit'}
+                onChange={handleChange}
+              />
+              <span className="expense-radio-custom expense-credit"></span>
+              Credit (Income)
+            </label>
+          </div>
+          {formErrors.type && <span className="expense-error-message">{formErrors.type}</span>}
+        </div>
+
+        <div className="expense-form-actions">
+          <button 
+            type="button" 
+            onClick={handleReset}
+            className="expense-reset-btn"
+            disabled={isLoading}
           >
-            <option value="debit">Debit</option>
-            <option value="credit">Credit</option>
-          </select>
-          {formErrors.type && <span className="error-message">{formErrors.type}</span>}
-        </div>
-
-        <div className="form-actions">
-          <button type="submit" className="save-btn">
-            Save Expense
+            <X size={18} />
+            Reset
+          </button>
+          <button 
+            type="submit" 
+            className={`expense-save-btn ${isLoading ? 'expense-loading' : ''}`}
+            disabled={isLoading}
+          >
+            <Save size={18} />
+            {isLoading ? 'Saving...' : 'Save Expense'}
           </button>
         </div>
       </form>

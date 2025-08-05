@@ -9,7 +9,6 @@ const ExpenseSummary = ({ expenses }) => {
     }).format(amount);
   };
 
-  // Calculate totals
   const totalDebit = expenses
     .filter(exp => exp.type === 'debit')
     .reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
@@ -20,7 +19,6 @@ const ExpenseSummary = ({ expenses }) => {
 
   const netBalance = totalCredit - totalDebit;
 
-  // Calculate category breakdown
   const categoryTotals = expenses.reduce((acc, expense) => {
     const key = `${expense.category}_${expense.type}`;
     if (!acc[key]) {
@@ -33,31 +31,31 @@ const ExpenseSummary = ({ expenses }) => {
   const categoryBreakdown = Object.values(categoryTotals);
 
   return (
-    <div className="summary-card">
+    <div className="expense-summary-card">
       <h3>Expense Summary</h3>
 
-      <div className="summary-total">
+      <div className="expense-summary-total">
         <h4>Total Debit</h4>
-        <p className="total-amount">{formatCurrency(totalDebit)}</p>
+        <p className="expense-total-amount">{formatCurrency(totalDebit)}</p>
       </div>
 
-      <div className="summary-total">
+      <div className="expense-summary-total">
         <h4>Total Credit</h4>
-        <p className="total-amount">{formatCurrency(totalCredit)}</p>
+        <p className="expense-total-amount">{formatCurrency(totalCredit)}</p>
       </div>
 
-      <div className="summary-total">
+      <div className="expense-summary-total">
         <h4>Net Balance</h4>
-        <p className="total-amount">{formatCurrency(netBalance)}</p>
+        <p className="expense-total-amount">{formatCurrency(netBalance)}</p>
       </div>
 
-      <div className="category-breakdown">
+      <div className="expense-category-breakdown">
         <h4>Breakdown by Category</h4>
         <ul>
           {categoryBreakdown.map(({ category, type, total }) => (
             <li key={`${category}_${type}`}>
-              <span className="category-name">{category} ({type})</span>
-              <span className="category-amount">{formatCurrency(total)}</span>
+              <span className="expense-category-name">{category} ({type})</span>
+              <span className="expense-category-amount">{formatCurrency(total)}</span>
             </li>
           ))}
         </ul>

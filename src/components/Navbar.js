@@ -1,188 +1,162 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Sun, Moon, ChevronDown } from 'lucide-react';
+import { useTheme } from '../components/Theme'; // Adjust path as needed
 
 const Navbar = () => {
+  const { isDarkMode, setIsDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if it's mobile view
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Toggle mobile menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    setActiveDropdown(null); 
-    
-    // Prevent body scroll when menu is open
-    if (!isMenuOpen) {
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
-    }
+    if (activeDropdown && !isMenuOpen) setActiveDropdown(null);
   };
-
-  // Close menu when clicking on a link
   const closeMenu = () => {
     setIsMenuOpen(false);
     setActiveDropdown(null);
-    document.body.classList.remove('menu-open');
   };
+  const toggleDropdown = dropdown =>
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
 
-  // Handle dropdown toggle (desktop only)
-  const toggleDropdown = (dropdownName) => {
-    if (!isMobile) {
-      setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
-    }
-  };
-
-  // Close menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest('.navbar')) {
-        setIsMenuOpen(false);
+    const handleClickOutside = event => {
+      if (
+        !isMobile &&
+        !event.target.closest('.dropdown') &&
+        !event.target.closest('.navbar-container')
+      ) {
         setActiveDropdown(null);
-        document.body.classList.remove('menu-open');
       }
     };
-
     document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+    return () =>
+      document.removeEventListener('click', handleClickOutside);
+  }, [isMobile]);
 
-  // Close menu on escape key
   useEffect(() => {
-    const handleEscape = (event) => {
+    const handleEscape = event => {
       if (event.key === 'Escape') {
         setIsMenuOpen(false);
         setActiveDropdown(null);
-        document.body.classList.remove('menu-open');
       }
     };
-
     document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    return () =>
+      document.removeEventListener('keydown', handleEscape);
   }, []);
 
+  const navItems = [
+    { title: 'Dashboard', href: '/' },
+    {
+      title: 'Employee',
+      dropdown: [
+        { title: 'Employee Management', href: '/EmployeeManagement' },
+        { title: 'Attendance', href: '/Attendance' },
+        { title: 'Leave Tracker', href: '/LeaveTracker' },
+        { title: 'Payslips', href: '/Payslips' },
+      ],
+    },
+    {
+      title: 'Finance',
+      dropdown: [
+        { title: 'Reimbursements', href: '/Reimbursements' },
+        { title: 'Expense Categories', href: '/Expenses' },
+        { title: 'Bills', href: '/Bills' },
+      ],
+    },
+    {
+      title: 'Operations',
+      dropdown: [
+        { title: 'Document Management', href: '/DocumentManagement' },
+      ],
+    },
+  ];
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  const themeClass = isDarkMode ? 'dark' : 'light';
+
   return (
-    <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
-      <div className="navbar-container">
-        {/* Logo */}
-        <Link href="/" className="navbar-logo" onClick={closeMenu}>
-          <span className="logo-text">Saibbyweb</span>
-          <span className="logo-subtitle">Management System</span>
-        </Link>
-
-        {/* Desktop Navigation Links */}
-        <ul className={`navbar-links ${isMenuOpen ? 'navbar-links-open' : ''}`}>
-          <li><Link href="/" onClick={closeMenu}>Dashboard</Link></li>
-          
-          {/* For Desktop: Show dropdowns */}
-          {!isMobile && (
-            <>
-              {/* Employee Management Dropdown */}
-              <li className="dropdown">
-                <button 
-                  className="dropdown-toggle"
-                  onClick={() => toggleDropdown('employee')}
-                  aria-expanded={activeDropdown === 'employee'}
-                >
-                  Employee
-                  <span className={`dropdown-arrow ${activeDropdown === 'employee' ? 'dropdown-arrow-open' : ''}`}></span>
-                </button>
-                <ul className={`dropdown-menu ${activeDropdown === 'employee' ? 'dropdown-menu-open' : ''}`}>
-                  <li><Link href="/EmployeeManagement" onClick={closeMenu}>Employee Management</Link></li>
-                  <li><Link href="/Attendance" onClick={closeMenu}>Attendance</Link></li>
-                  <li><Link href="/LeaveTracker" onClick={closeMenu}>Leave Tracker</Link></li>
-                  <li><Link href="/Payslips" onClick={closeMenu}>Payslips</Link></li>
-                </ul>
+    <div className={`theme-${themeClass}`}>
+      <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${themeClass}`}>
+        <div className="navbar-container">
+          {/* Logo */}
+          <a href="/" className="navbar-logo" onClick={closeMenu}>
+            <span className="logo-text">SW.</span>
+          </a>
+          {/* Desktop Navigation Links */}
+          <ul className={`navbar-links ${isMenuOpen ? 'navbar-links-open' : ''}`}>
+            {navItems.map((item, index) => (
+              <li key={index} className={item.dropdown ? 'dropdown' : ''}>
+                {item.dropdown ? (
+                  <>
+                    <button
+                      className={`dropdown-toggle ${activeDropdown === item.title.toLowerCase() ? 'active' : ''}`}
+                      onClick={() => toggleDropdown(item.title.toLowerCase())}
+                      aria-expanded={activeDropdown === item.title.toLowerCase()}
+                    >
+                      <span className="nav-text">{item.title}</span>
+                      <ChevronDown
+                        size={16}
+                        className={`dropdown-icon ${activeDropdown === item.title.toLowerCase() ? 'rotated' : ''}`}
+                      />
+                    </button>
+                    <ul className={`dropdown-menu ${activeDropdown === item.title.toLowerCase() ? 'dropdown-menu-open' : ''}`}>
+                      {item.dropdown.map((subItem, subIndex) => (
+                        <li key={subIndex}>
+                          <a
+                            href={subItem.href}
+                            onClick={closeMenu}
+                            className="dropdown-link"
+                          >
+                            <span className="nav-text">{subItem.title}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <a href={item.href} onClick={closeMenu} className="nav-link">
+                    <span className="nav-text">{item.title}</span>
+                  </a>
+                )}
               </li>
-
-              {/* Financial Management Dropdown */}
-              <li className="dropdown">
-                <button 
-                  className="dropdown-toggle"
-                  onClick={() => toggleDropdown('finance')}
-                  aria-expanded={activeDropdown === 'finance'}
-                >
-                  Finance
-                  <span className={`dropdown-arrow ${activeDropdown === 'finance' ? 'dropdown-arrow-open' : ''}`}> </span>
-                </button>
-                <ul className={`dropdown-menu ${activeDropdown === 'finance' ? 'dropdown-menu-open' : ''}`}>
-                  <li><Link href="/Reimbursements" onClick={closeMenu}>Reimbursements</Link></li>
-                  <li><Link href="/ExpenseCategories" onClick={closeMenu}>Expense Categories</Link></li>
-                  <li><Link href="/ElectricityBills" onClick={closeMenu}>Electricity Bills</Link></li>
-                </ul>
-              </li>
-
-              {/* Operations Dropdown */}
-              <li className="dropdown">
-                <button 
-                  className="dropdown-toggle"
-                  onClick={() => toggleDropdown('operations')}
-                  aria-expanded={activeDropdown === 'operations'}
-                >
-                  Operations
-                  <span className={`dropdown-arrow ${activeDropdown === 'operations' ? 'dropdown-arrow-open' : ''}`}> </span>
-                </button>
-                <ul className={`dropdown-menu ${activeDropdown === 'operations' ? 'dropdown-menu-open' : ''}`}>
-                  <li><Link href="/DocumentManagement" onClick={closeMenu}>Document Management</Link></li>
-                </ul>
-              </li>
-            </>
-          )}
-
-          {/* For Mobile: Show all links as regular menu items */}
-          {isMobile && (
-            <>
-              <li><Link href="/EmployeeManagement" onClick={closeMenu}>Employee Management</Link></li>
-              <li><Link href="/Attendance" onClick={closeMenu}>Attendance</Link></li>
-              <li><Link href="/OfferLetter" onClick={closeMenu}>Offer Letter</Link></li>
-              <li><Link href="/Payslips" onClick={closeMenu}>Payslips</Link></li>
-              <li><Link href="/LeaveTracker" onClick={closeMenu}>Leave Tracker</Link></li>
-              <li><Link href="/DocumentManagement" onClick={closeMenu}>Document Management</Link></li>
-              <li><Link href="/Reimbursements" onClick={closeMenu}>Reimbursements</Link></li>
-              <li><Link href="/ExpenseCategories" onClick={closeMenu}>Expense Categories</Link></li>
-              <li><Link href="/ElectricityBills" onClick={closeMenu}>Electricity Bills</Link></li>
-            </>
-          )}
-        </ul>
-
-        {/* Mobile Hamburger Menu */}
-        <button 
-          className={`hamburger ${isMenuOpen ? 'hamburger-open' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Toggle navigation menu"
-          aria-expanded={isMenuOpen}
-        >
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-        </button>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div className={`navbar-overlay ${isMenuOpen ? 'navbar-overlay-open' : ''}`} onClick={closeMenu}></div>
-    </nav>
+            ))}
+          </ul>
+          {/* Theme Toggle & Hamburger */}
+          <div className="nav-controls">
+            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+              {isDarkMode ? <Sun size={20} className="theme-icon" /> : <Moon size={20} className="theme-icon" />}
+            </button>
+            <button
+              className={`hamburger ${isMenuOpen ? 'hamburger-open' : ''}`}
+              onClick={toggleMenu}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+            >
+              <span className="hamburger-line hamburger-line-1"></span>
+              <span className="hamburger-line hamburger-line-2"></span>
+              <span className="hamburger-line hamburger-line-3"></span>
+            </button>
+          </div>
+        </div>
+        <div className={`navbar-overlay ${isMenuOpen ? 'navbar-overlay-open' : ''}`} onClick={closeMenu}></div>
+      </nav>
+    </div>
   );
 };
 

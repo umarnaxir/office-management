@@ -1,31 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import {
-  Users,
-  FileText,
-  Calendar,
-  DollarSign,
-  CreditCard,
-  FolderOpen,
-  PieChart,
-  Zap,
-  Plane,
-  Lightbulb,
-  Sun,
-  Moon,
-  Heart
+  Users, FileText, Calendar, DollarSign, CreditCard, FolderOpen,
+  PieChart, Zap, Plane, Lightbulb, Heart
 } from "lucide-react";
+import { useTheme } from '../components/Theme';
 
 const Dashboard = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  useEffect(() => {
-    document.body.className = isDarkMode ? "dark-theme" : "light-theme";
-  }, [isDarkMode]);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  useTheme();
 
   return (
     <>
@@ -44,23 +26,16 @@ const Dashboard = () => {
           />
         ))}
       </div>
-
-      {/* Theme Toggle Button */}
-      <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
+      {/* NO Toggle Here! */}
 
       <div className="dashboard-container">
         <div className="page-dashboard">
           <header className="dashboard-header">
             <h1 className="dashboard-title">Office Management System</h1>
             <p className="dashboard-subtitle">
-              Manage employees, tasks, finances, and data — all in one place to streamline your
-              office workflow.
+              Manage employees, tasks, finances, and data — all in one place to streamline your office workflow.
             </p>
           </header>
-
-          {/* Dashboard Cards */}
           <div className="dashboard-grid">
             <Link href="/EmployeeManagement" className="dashboard-link">
               <div className="dashboard-card employees-card">
@@ -71,17 +46,15 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-
             <Link href="/OfferLetter" className="dashboard-link">
               <div className="dashboard-card offer-letter-card">
                 <FileText size={48} className="card-icon icon-green" />
                 <div className="card-content">
-                  <h3>Offer Letter</h3>
+                  <h3>Office Letter</h3>
                   <p>Generate and manage professional offer letters</p>
                 </div>
               </div>
             </Link>
-
             <Link href="/Attendance" className="dashboard-link">
               <div className="dashboard-card attendance-card">
                 <Calendar size={48} className="card-icon icon-purple" />
@@ -91,7 +64,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-
             <Link href="/Reimbursements" className="dashboard-link">
               <div className="dashboard-card reimbursements-card">
                 <DollarSign size={48} className="card-icon icon-yellow" />
@@ -101,7 +73,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-
             <Link href="/Payslips" className="dashboard-link">
               <div className="dashboard-card payslips-card">
                 <CreditCard size={48} className="card-icon icon-pink" />
@@ -111,7 +82,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-
             <Link href="/DocumentManagement" className="dashboard-link">
               <div className="dashboard-card document-management-card">
                 <FolderOpen size={48} className="card-icon icon-indigo" />
@@ -121,27 +91,24 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-
             <Link href="/Expenses" className="dashboard-link">
               <div className="dashboard-card expense-categories-card">
                 <PieChart size={48} className="card-icon icon-red" />
                 <div className="card-content">
-                  <h3>Expense Categories</h3>
+                  <h3>Expense</h3>
                   <p>Categorize and manage different expense types</p>
                 </div>
               </div>
             </Link>
-
-            <Link href="/ElectricityBills" className="dashboard-link">
+            <Link href="/Bills" className="dashboard-link">
               <div className="dashboard-card electricity-bills-card">
                 <Zap size={48} className="card-icon icon-orange" />
                 <div className="card-content">
-                  <h3>Electricity Bills</h3>
+                  <h3>Bills</h3>
                   <p>Manage utility bills and payment tracking</p>
                 </div>
               </div>
             </Link>
-
             <Link href="/LeaveTracker" className="dashboard-link">
               <div className="dashboard-card leave-tracker-card">
                 <Plane size={48} className="card-icon icon-teal" />
@@ -152,7 +119,6 @@ const Dashboard = () => {
               </div>
             </Link>
           </div>
-
           {/* Expense Reminder */}
           <div className="expense-reminder-container">
             <Link href="/ExpenseCategories" className="dashboard-link">
@@ -170,17 +136,6 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-
-        {/* Footer */}
-        <footer className="dashboard-footer">
-          <div className="footer-content">
-            <p>© Office Management System 2025. All Rights Reserved.</p>
-            <p>
-              Crafted with <Heart size={16} className="heart-icon" /> in Kashmir by{" "}
-              <span className="developer-name">Saibbyweb</span>
-            </p>
-          </div>
-        </footer>
       </div>
     </>
   );

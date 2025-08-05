@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import ExpenseHome from '../components/Expenses/ExpenseHome';
 import ExpenseForm from '../components/Expenses/ExpenseForm';
 import ExpenseList from '../components/Expenses/ExpenseList';
 import ExpenseSummary from '../components/Expenses/ExpenseSummary';
 
-// Mock JSON file content (in a real app, this would be read from a file via API)
 const initialJsonData = [];
 
-// Custom hook to simulate JSON file operations
 const useJsonFile = (initialData) => {
   const [data, setData] = useState(initialData);
 
-  // Simulate reading JSON file on mount
   useEffect(() => {
-    // In a real app, fetch from backend API (e.g., /api/expenses)
-    // For demo, use localStorage as a fallback or mock data
     try {
-      const storedData = localStorage.getItem('expensesJson');
-      if (storedData) {
-        setData(JSON.parse(storedData));
-      } else {
-        setData(initialData);
-      }
+      const storedData = JSON.parse(localStorage.getItem('expensesJson') || '[]');
+      setData(storedData.length > 0 ? storedData : initialData);
     } catch (error) {
       console.error('Error reading JSON data:', error);
+      setData(initialData);
     }
   }, []);
 
-  // Simulate writing to JSON file
   const saveData = (newData) => {
     try {
       setData(newData);
-      // In a real app, send to backend API to write to expenses.json
       localStorage.setItem('expensesJson', JSON.stringify(newData));
     } catch (error) {
       console.error('Error saving JSON data:', error);
@@ -42,9 +33,11 @@ const useJsonFile = (initialData) => {
 
 const Expense = () => {
   const [expenses, setExpenses] = useJsonFile(initialJsonData);
+  const [currentView, setCurrentView] = useState('home');
 
   const addExpense = (expense) => {
-    setExpenses([...expenses, { ...expense, id: Date.now() }]);
+    const newExpense = { ...expense, id: Date.now() };
+    setExpenses([...expenses, newExpense]);
   };
 
   const deleteExpense = (id) => {
@@ -57,33 +50,99 @@ const Expense = () => {
     }
   };
 
-  return (
-    <div className="expense-container">
-      <header className="expense-header">
-        <h1>Office Expense Management</h1>
-        <p>Track and manage your office expenses efficiently</p>
-      </header>
-
-      <div className="expense-layout">
-        <div className="expense-form-section">
-          <ExpenseForm onSave={addExpense} />
-          <ExpenseSummary expenses={expenses} />
-        </div>
-
-        <div className="expense-list-section">
-          <div className="expense-list-header">
-            <h2>Expense Records</h2>
-            {expenses.length > 0 && (
-              <button onClick={clearAllExpenses} className="clear-all-btn">
-                Clear All
+  const renderCurrentView = () => {
+    switch (currentView) {
+      case 'home':
+        return (
+          <ExpenseHome 
+            expenses={expenses} 
+            setCurrentView={setCurrentView}
+            addExpense={addExpense}
+          />
+        );
+      case 'form':
+        return (
+          <div className="expense-container">
+            <header className="expense-header">
+              <h1>Add New Expense</h1>
+              <button 
+                className="expense-back-btn"
+                onClick={() => setCurrentView('home')}
+              >
+                ← Back to Home
               </button>
-            )}
+            </header>
+            <div className="expense-layout">
+              <div className="expense-form-section">
+                <ExpenseForm 
+                  onSave={(expense) => {
+                    addExpense(expense);
+                    setCurrentView('home');
+                  }} 
+                />
+                <ExpenseSummary expenses={expenses} />
+              </div>
+            </div>
           </div>
-          <ExpenseList expenses={expenses} onDelete={deleteExpense} />
-        </div>
-      </div>
-    </div>
-  );
+        );
+      case 'list':
+        return (
+          <div className="expense-container">
+            <header className="expense-header">
+              <h1>Expense Records</h1>
+              <button 
+                className="expense-back-btn"
+                onClick={() => setCurrentView('home')}
+              >
+                ← Back to Home
+              </button>
+            </header>
+            <div className="expense-layout">
+              <div className="expense-list-section">
+                <div className="expense-list-header">
+                  <h2>All Expenses</h2>
+                  {expenses.length > 0 && (
+                    <button onClick={clearAllExpenses} className="expense-clear-all-btn">
+                      Clear All
+                    </button>
+                  )}
+                </div>
+                <ExpenseList expenses={expenses} onDelete={deleteExpense} />
+              </div>
+            </div>
+          </div>
+        );
+      case 'summary':
+        return (
+          <div className="expense-container">
+            <header className="expense-header">
+              <h1>Expense Analytics</h1>
+              <button 
+                className="expense-back-btn"
+                onClick={() => setCurrentView('home')}
+              >
+                ← Back to Home
+              </button>
+            </header>
+            <div className="expense-layout">
+              <div className="expense-summary-section">
+                <ExpenseSummary expenses={expenses} />
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <ExpenseHome 
+            expenses={expenses} 
+            setCurrentView={setCurrentView}
+            addExpense={addExpense}
+          />
+        );
+    }
+  };
+
+  return renderCurrentView();
 };
 
 export default Expense;
