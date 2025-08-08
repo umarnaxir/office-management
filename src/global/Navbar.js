@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sun, Moon, ChevronDown } from 'lucide-react';
-import { useTheme } from '../components/Theme'; // Adjust path as needed
+import { useTheme } from './Theme'; // Adjust path as needed
 
 const Navbar = () => {
   const { isDarkMode, setIsDarkMode } = useTheme();

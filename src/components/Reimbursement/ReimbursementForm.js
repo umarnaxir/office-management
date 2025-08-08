@@ -1,49 +1,74 @@
 import React, { useState } from 'react';
-import { 
-  ArrowLeft, 
-  Plus,
-  User,
-  FileText,
-  DollarSign,
-  Activity,
-  Calendar,
-  Upload
-} from 'lucide-react';
+import { ArrowLeft, Plus, User, FileText, DollarSign, Activity, Calendar, Upload } from 'lucide-react';
+import { useCreateReimburse } from '../../hooks/useCreateReimburse';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import {
+  TextInput,
+  TextAreaInput,
+  NumberInput,
+  SelectInput,
+  DateInput,
+  FileInput
+} from './FormInputs';
 
-const ReimbursementForm = ({ addReimbursement, setCurrentView }) => {
-  const [formData, setFormData] = useState({
-    employeeName: '',
-    description: '',
-    amount: '',
-    category: '',
-    date: '',
-    receiptFile: null
-  });
+const ReimbursementForm = ({ setCurrentView }) => {
   const [fileName, setFileName] = useState('');
+  const { createReimbursement, loading, error } = useCreateReimburse();
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      setFormData(prev => ({ ...prev, [name]: files[0] }));
-      setFileName(files[0].name);
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+  const categoryOptions = [
+    { value: 'food', label: 'Food & Dining' },
+    { value: 'travel', label: 'Travel & Transport' },
+    { value: 'supplies', label: 'Office Supplies' },
+    { value: 'tools', label: 'Tools & Equipment' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const validationSchema = Yup.object().shape({
+    employeeName: Yup.string().required('Employee name is required'),
+    description: Yup.string().required('Description is required'),
+    amount: Yup.number()
+      .required('Amount is required')
+      .positive('Amount must be positive')
+      .typeError('Amount must be a number'),
+    category: Yup.string().required('Category is required'),
+    date: Yup.date()
+      .required('Date is required')
+      .typeError('Please enter a valid date'),
+    receiptFile: Yup.mixed()
+      .required('Receipt is required')
+      .test('fileSize', 'File too large', value => value && value.size <= 5000000)
+      .test('fileType', 'Unsupported file type', value => 
+        value && ['image/jpeg', 'image/png', 'application/pdf'].includes(value.type)
+      )
+  });
+
+  const handleSubmit = async (values) => {
+    try {
+      const submissionData = {
+        employeeName: values.employeeName.trim(),
+        description: values.description.trim(),
+        amount: parseFloat(values.amount),
+        category: values.category,
+        date: values.date,
+        status: 'pending',
+        receiptFile: {
+          name: values.receiptFile?.name || '',
+          size: values.receiptFile?.size || 0,
+          type: values.receiptFile?.type || ''
+        }
+      };
+      
+      await createReimbursement(submissionData);
+      alert('Reimbursement submitted successfully!');
+      setFileName('');
+      setCurrentView('list');
+    } catch (err) {
+      alert('Failed to submit reimbursement: ' + err.message);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addReimbursement(formData);
-    setFormData({ 
-      employeeName: '', 
-      description: '', 
-      amount: '', 
-      category: '', 
-      date: '', 
-      receiptFile: null 
-    });
-    setFileName('');
-  };
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="form-container">
@@ -55,123 +80,101 @@ const ReimbursementForm = ({ addReimbursement, setCurrentView }) => {
         <h1>Submit Reimbursement Request</h1>
       </div>
 
-      <div className="reimbursement-form">
-        <form onSubmit={handleSubmit}>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>
-                <User className="label-icon" />
-                Employee Name
-              </label>
-              <input 
-                type="text" 
-                name="employeeName" 
-                placeholder="Enter your full name" 
-                value={formData.employeeName} 
-                onChange={handleChange} 
-                required 
+      <Formik
+        initialValues={{
+          employeeName: '',
+          description: '',
+          amount: '',
+          category: '',
+          date: today,
+          receiptFile: null
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        enableReinitialize={true}
+      >
+        {formik => (
+          <Form>
+            <div className="form-grid">
+              <TextInput
+                label="Employee Name"
+                name="employeeName"
+                icon={User}
+                formik={formik}
+                placeholder="Enter your full name"
+              />
+
+              <TextAreaInput
+                label="Description"
+                name="description"
+                icon={FileText}
+                formik={formik}
+                placeholder="Describe the expense..."
+              />
+
+              <NumberInput
+                label="Amount (₹)"
+                name="amount"
+                icon={DollarSign}
+                formik={formik}
+                placeholder="0.00"
+              />
+
+              <SelectInput
+                label="Category"
+                name="category"
+                icon={Activity}
+                formik={formik}
+                options={categoryOptions}
+              />
+
+              <DateInput
+                label="Date"
+                name="date"
+                icon={Calendar}
+                formik={formik}
+              />
+
+              <FileInput
+                label="Upload Receipt"
+                name="receiptFile"
+                icon={Upload}
+                formik={formik}
+                fileName={fileName}
+                setFileName={setFileName}
               />
             </div>
 
-            <div className="form-group">
-              <label>
-                <FileText className="label-icon" />
-                Description
-              </label>
-              <textarea 
-                name="description" 
-                placeholder="Describe the expense..." 
-                value={formData.description} 
-                onChange={handleChange} 
-                required 
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                <DollarSign className="label-icon" />
-                Amount
-              </label>
-              <input 
-                type="number" 
-                name="amount" 
-                placeholder="0.00" 
-                step="0.01"
-                value={formData.amount} 
-                onChange={handleChange} 
-                required 
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                <Activity className="label-icon" />
-                Category
-              </label>
-              <select 
-                name="category" 
-                value={formData.category} 
-                onChange={handleChange} 
-                required
+            <div className="form-actions">
+              <button 
+                type="button" 
+                className="btn-secondary" 
+                onClick={() => setCurrentView('home')}
+                disabled={loading}
               >
-                <option value="">Select Category</option>
-                <option value="food">Food & Dining</option>
-                <option value="travel">Travel & Transport</option>
-                <option value="supplies">Office Supplies</option>
-                <option value="tools">Tools & Equipment</option>
-                <option value="other">Other</option>
-              </select>
+                Cancel
+              </button>
+              <button 
+                type="button" 
+                className="btn-primary" 
+                disabled={!formik.isValid || loading}
+                onClick={() => {
+                  if (formik.isValid) {
+                    handleSubmit(formik.values);
+                  }
+                }}
+              >
+                {loading ? 'Submitting...' : (
+                  <>
+                    <Plus className="btn-icon" />
+                    Submit Request
+                  </>
+                )}
+              </button>
             </div>
-
-            <div className="form-group">
-              <label>
-                <Calendar className="label-icon" />
-                Date
-              </label>
-              <input 
-                type="date" 
-                name="date" 
-                value={formData.date} 
-                onChange={handleChange} 
-                required 
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                <Upload className="label-icon" />
-                Upload Receipt
-              </label>
-              <div className="file-input-wrapper">
-                <input 
-                  type="file" 
-                  name="receiptFile" 
-                  accept="image/*,application/pdf" 
-                  onChange={handleChange} 
-                  id="receipt-upload"
-                />
-                <label 
-                  htmlFor="receipt-upload" 
-                  className={`file-input-label ${fileName ? 'file-selected' : ''}`}
-                >
-                  <Upload className="upload-icon" />
-                  {fileName || 'Choose file or drag here'}
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="form-actions">
-            <button type="button" className="btn-secondary" onClick={() => setCurrentView('home')}>
-              Cancel
-            </button>
-            <button type="submit" className="btn-primary">
-              <Plus className="btn-icon" />
-              Submit Request
-            </button>
-          </div>
-        </form>
-      </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

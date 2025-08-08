@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X, Calculator, Calendar, Tag, FileText, DollarSign } from 'lucide-react';
+import { useCreateExpenses } from '../../hooks/useCreateExpenses';
 
 const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
   const [formData, setFormData] = useState({
@@ -11,13 +12,8 @@ const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (preSelectedCategory) {
-      setFormData(prev => ({ ...prev, category: preSelectedCategory }));
-    }
-  }, [preSelectedCategory]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { createExpense } = useCreateExpenses();
 
   const categories = [
     'Food Items',
@@ -31,6 +27,12 @@ const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
     'Other'
   ];
 
+  useEffect(() => {
+    if (preSelectedCategory) {
+      setFormData(prev => ({ ...prev, category: preSelectedCategory }));
+    }
+  }, [preSelectedCategory]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -43,9 +45,12 @@ const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
     const errors = {};
     if (!formData.category) errors.category = 'Category is required';
     if (!formData.description.trim()) errors.description = 'Description is required';
-    if (!formData.amount) errors.amount = 'Amount is required';
-    if (isNaN(formData.amount) || parseFloat(formData.amount) <= 0) {
-      errors.amount = 'Amount must be a positive number';
+    if (!formData.amount) {
+      errors.amount = 'Amount is required';
+    } else if (isNaN(formData.amount)) {
+      errors.amount = 'Amount must be a number';
+    } else if (parseFloat(formData.amount) <= 0) {
+      errors.amount = 'Amount must be positive';
     }
     if (!formData.type) errors.type = 'Transaction type is required';
 
@@ -55,26 +60,33 @@ const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    
+    if (isSubmitting) return;
+    
     if (validateForm()) {
-      setIsLoading(true);
-      
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      onSave({
-        ...formData,
-        amount: parseFloat(formData.amount).toFixed(2),
-        description: formData.description.trim(),
-      });
-
-      setFormData({
-        date: new Date().toISOString().split('T')[0],
-        category: '',
-        description: '',
-        amount: '',
-        type: 'debit',
-      });
-      
-      setIsLoading(false);
+      setIsSubmitting(true);
+      try {
+        const expenseData = {
+          ...formData,
+          amount: parseFloat(formData.amount).toFixed(2),
+          description: formData.description.trim(),
+        };
+        
+        await onSave(expenseData);
+        
+        setFormData({
+          date: new Date().toISOString().split('T')[0],
+          category: preSelectedCategory,
+          description: '',
+          amount: '',
+          type: 'debit',
+        });
+      } catch (err) {
+        console.error('Submission error:', err);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -206,18 +218,18 @@ const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
             type="button" 
             onClick={handleReset}
             className="expense-reset-btn"
-            disabled={isLoading}
+            disabled={isSubmitting}
           >
             <X size={18} />
             Reset
           </button>
           <button 
             type="submit" 
-            className={`expense-save-btn ${isLoading ? 'expense-loading' : ''}`}
-            disabled={isLoading}
+            className={`expense-save-btn ${isSubmitting ? 'expense-loading' : ''}`}
+            disabled={isSubmitting}
           >
             <Save size={18} />
-            {isLoading ? 'Saving...' : 'Save Expense'}
+            {isSubmitting ? 'Saving...' : 'Save Expense'}
           </button>
         </div>
       </form>

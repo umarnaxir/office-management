@@ -1,9 +1,7 @@
 import React from "react";
-// import BackArrow from "../BackArrow";
 import {
   Plus,
   FileText,
-  DollarSign,
   Clock,
   CheckCircle,
   XCircle,
@@ -13,7 +11,13 @@ import {
 } from "lucide-react";
 
 const HomePage = ({ reimbursements, setCurrentView }) => {
-  const conversionRate = 83.5; // USD to INR
+  const formatIndianCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 2
+    }).format(amount);
+  };
 
   // Calculate statistics
   const stats = {
@@ -29,8 +33,6 @@ const HomePage = ({ reimbursements, setCurrentView }) => {
 
   return (
     <div className="home-container">
-      {/* <BackArrow /> Back to home */}
-      {/* Header */}
       <div className="home-header">
         <div className="header-content">
           <h1 className="main-title">
@@ -40,7 +42,7 @@ const HomePage = ({ reimbursements, setCurrentView }) => {
           <p className="subtitle">Streamline your expense management process</p>
         </div>
       </div>
-      {/* Quick Actions */}
+
       <div className="quick-actions">
         <button
           className="action-card primary"
@@ -64,7 +66,7 @@ const HomePage = ({ reimbursements, setCurrentView }) => {
           </div>
         </button>
       </div>
-      {/* Statistics Dashboard */}
+
       <div className="stats-section">
         <h2 className="section-title">
           <TrendingUp className="section-icon" />
@@ -114,16 +116,16 @@ const HomePage = ({ reimbursements, setCurrentView }) => {
 
           <div className="stat-card amount">
             <div className="stat-icon amount">
-              <DollarSign />
+              <Receipt />
             </div>
             <div className="stat-content">
-              <h3>₹{(stats.totalAmount * conversionRate).toFixed(2)}</h3>
+              <h3>{formatIndianCurrency(stats.totalAmount)}</h3>
               <p>Total Amount</p>
             </div>
           </div>
         </div>
       </div>
-      {/* Recent Activity */}
+
       <div className="recent-section">
         <h2 className="section-title">
           <Clock className="section-icon" />
@@ -139,8 +141,7 @@ const HomePage = ({ reimbursements, setCurrentView }) => {
               <div className="recent-content">
                 <h4>{item.description}</h4>
                 <p>
-                  {item.employeeName} • ₹
-                  {(parseFloat(item.amount) * conversionRate).toFixed(2)}
+                  {item.employeeName} • {formatIndianCurrency(parseFloat(item.amount))}
                 </p>
               </div>
               <div className={`status-badge status-${item.status}`}>

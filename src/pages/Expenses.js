@@ -3,61 +3,77 @@ import ExpenseHome from '../components/Expenses/ExpenseHome';
 import ExpenseForm from '../components/Expenses/ExpenseForm';
 import ExpenseList from '../components/Expenses/ExpenseList';
 import ExpenseSummary from '../components/Expenses/ExpenseSummary';
-
-const initialJsonData = [];
-
-const useJsonFile = (initialData) => {
-  const [data, setData] = useState(initialData);
-
-  useEffect(() => {
-    try {
-      const storedData = JSON.parse(localStorage.getItem('expensesJson') || '[]');
-      setData(storedData.length > 0 ? storedData : initialData);
-    } catch (error) {
-      console.error('Error reading JSON data:', error);
-      setData(initialData);
-    }
-  }, []);
-
-  const saveData = (newData) => {
-    try {
-      setData(newData);
-      localStorage.setItem('expensesJson', JSON.stringify(newData));
-    } catch (error) {
-      console.error('Error saving JSON data:', error);
-    }
-  };
-
-  return [data, saveData];
-};
+import { fetchExpenses, addExpense, deleteExpense, deleteAllExpenses } from '../services/expenseService';
 
 const Expense = () => {
-  const [expenses, setExpenses] = useJsonFile(initialJsonData);
+  const [expenses, setExpenses] = useState([]);
   const [currentView, setCurrentView] = useState('home');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const addExpense = (expense) => {
-    const newExpense = { ...expense, id: Date.now() };
-    setExpenses([...expenses, newExpense]);
+  useEffect(() => {
+    const loadExpenses = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchExpenses();
+        setExpenses(data);
+      } catch (err) {
+        setError(err.message);
+        alert('Failed to load expenses: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadExpenses();
+  }, []);
+
+  const addExpenseHandler = async (expense) => {
+    try {
+      const docId = await addExpense(expense);
+      setExpenses(prev => [...prev, { ...expense, id: docId }]);
+      alert('Expense added successfully!');
+      return true;
+    } catch (err) {
+      alert('Failed to add expense: ' + err.message);
+      return false;
+    }
   };
 
-  const deleteExpense = (id) => {
-    setExpenses(expenses.filter(exp => exp.id !== id));
+  const deleteExpenseHandler = async (id) => {
+    if (window.confirm('Are you sure you want to delete this expense?')) {
+      try {
+        await deleteExpense(id);
+        setExpenses(prev => prev.filter(exp => exp.id !== id));
+        alert('Expense deleted successfully!');
+      } catch (err) {
+        alert('Failed to delete expense: ' + err.message);
+      }
+    }
   };
 
-  const clearAllExpenses = () => {
-    if (window.confirm('Are you sure you want to delete all expenses?')) {
-      setExpenses([]);
+  const clearAllExpenses = async () => {
+    if (window.confirm('Are you sure you want to delete ALL expenses? This cannot be undone.')) {
+      try {
+        await deleteAllExpenses();
+        setExpenses([]);
+        alert('All expenses deleted successfully!');
+      } catch (err) {
+        alert('Failed to delete all expenses: ' + err.message);
+      }
     }
   };
 
   const renderCurrentView = () => {
+    if (loading) return <div className="expense-loading">Loading expenses...</div>;
+    if (error) return <div className="expense-error">Error: {error}</div>;
+
     switch (currentView) {
       case 'home':
         return (
           <ExpenseHome 
             expenses={expenses} 
             setCurrentView={setCurrentView}
-            addExpense={addExpense}
           />
         );
       case 'form':
@@ -75,9 +91,9 @@ const Expense = () => {
             <div className="expense-layout">
               <div className="expense-form-section">
                 <ExpenseForm 
-                  onSave={(expense) => {
-                    addExpense(expense);
-                    setCurrentView('home');
+                  onSave={async (expense) => {
+                    const success = await addExpenseHandler(expense);
+                    if (success) setCurrentView('home');
                   }} 
                 />
                 <ExpenseSummary expenses={expenses} />
@@ -107,7 +123,7 @@ const Expense = () => {
                     </button>
                   )}
                 </div>
-                <ExpenseList expenses={expenses} onDelete={deleteExpense} />
+                <ExpenseList expenses={expenses} onDelete={deleteExpenseHandler} />
               </div>
             </div>
           </div>
@@ -132,13 +148,7 @@ const Expense = () => {
           </div>
         );
       default:
-        return (
-          <ExpenseHome 
-            expenses={expenses} 
-            setCurrentView={setCurrentView}
-            addExpense={addExpense}
-          />
-        );
+        return <ExpenseHome expenses={expenses} setCurrentView={setCurrentView} />;
     }
   };
 
