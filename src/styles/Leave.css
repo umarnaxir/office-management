@@ -920,3 +920,107 @@ html {
     grid-template-columns: 1.5fr 1fr 1fr;
   }
 }
+/* Notification System */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.notification.success {
+  background: #4CAF50;
+}
+
+.notification.error {
+  background: #f44336;
+}
+
+.notification button {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Loading and Error States */
+.loading, .error {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.error {
+  color: #f44336;
+}
+
+/* Form Styling */
+.lf-form-group.error input,
+.lf-form-group.error textarea,
+.lf-form-group.error select {
+  border-color: #f44336;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Status Badges */
+.ll-status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.ll-status-pending {
+  background: #FFC107;
+  color: #000;
+}
+
+.ll-status-approved {
+  background: #4CAF50;
+  color: white;
+}
+
+.ll-status-rejected {
+  background: #f44336;
+  color: white;
+}
+
+/* Action Buttons */
+.ll-approve-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.ll-reject-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.ll-delete-btn {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 4px;
+}

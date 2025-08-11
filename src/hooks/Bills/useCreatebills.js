@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { addExpense } from "../services/expenseService";
+import { addBill } from "../../services/billServices";
 
-export const useCreateExpenses = () => {
+export const useCreateBills = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const createExpense = async (expenseData) => {
+  const createBill = async (billData) => {
     setLoading(true);
     setError(null);
     
     try {
-      const docId = await addExpense(expenseData);
+      const docId = await addBill(billData);
       return docId;
     } catch (e) {
       setError(e.message);
@@ -23,6 +23,6 @@ export const useCreateExpenses = () => {
   return {
     loading,
     error,
-    createExpense
+    createBill
   };
 };

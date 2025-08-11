@@ -34,7 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
         <main className="app-main">
           <Component {...pageProps} />
         </main>
-        {!shouldHideLayout && <Footer />}
+        {/* {!shouldHideLayout && <Footer />} */}
       </div>
     </ThemeProvider>
   );

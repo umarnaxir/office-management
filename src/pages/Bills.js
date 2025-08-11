@@ -1,22 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HomePage from '../components/Bills/HomePage';
 import CategoryPage from '../components/Bills/CategoryPage';
+import { fetchBills, addBill, updateBill, deleteBill } from '../services/billServices';
 
-const App = () => {
+const Bills = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [bills, setBills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [editingBill, setEditingBill] = useState(null);
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
 
-  const addBill = (bill) => {
-    setBills([...bills, { ...bill, id: Date.now(), status: 'unpaid' }]);
+  useEffect(() => {
+    const loadBills = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchBills();
+        setBills(data);
+      } catch (err) {
+        showNotification(err.message, 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadBills();
+  }, []);
+
+  const showNotification = (message, type) => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000);
   };
 
-  const updateStatus = (id, status) => {
-    setBills(bills.map(b => b.id === id ? { ...b, status } : b));
+  const addBillHandler = async (bill) => {
+    try {
+      const docId = await addBill({
+        ...bill,
+        status: 'unpaid',
+        createdAt: new Date().toISOString()
+      });
+      setBills(prev => [...prev, { ...bill, id: docId, status: 'unpaid' }]);
+      showNotification('Bill added successfully!', 'success');
+      return true;
+    } catch (err) {
+      showNotification(`Failed to add bill: ${err.message}`, 'error');
+      return false;
+    }
   };
 
-  const deleteBill = (id) => {
+  const editBillHandler = async (updatedBill) => {
+    try {
+      await updateBill(updatedBill.id, updatedBill);
+      setBills(prev => prev.map(b => b.id === updatedBill.id ? updatedBill : b));
+      setEditingBill(null);
+      showNotification('Bill updated successfully!', 'success');
+      return true;
+    } catch (err) {
+      showNotification(`Failed to update bill: ${err.message}`, 'error');
+      return false;
+    }
+  };
+
+  const updateStatusHandler = async (id, currentStatus) => {
+    const newStatus = currentStatus === 'paid' ? 'unpaid' : 'paid';
+    try {
+      await updateBill(id, { status: newStatus });
+      setBills(prev => prev.map(b => b.id === id ? { ...b, status: newStatus } : b));
+      showNotification(`Bill marked as ${newStatus}`, 'success');
+    } catch (err) {
+      showNotification(`Failed to update status: ${err.message}`, 'error');
+    }
+  };
+
+  const deleteBillHandler = async (id) => {
     if (window.confirm('Are you sure you want to delete this bill?')) {
-      setBills(bills.filter(b => b.id !== id));
+      try {
+        await deleteBill(id);
+        setBills(prev => prev.filter(b => b.id !== id));
+        showNotification('Bill deleted successfully!', 'success');
+      } catch (err) {
+        showNotification(`Failed to delete bill: ${err.message}`, 'error');
+      }
     }
   };
 
@@ -51,26 +115,39 @@ Generated on: ${new Date().toLocaleString()}
     URL.revokeObjectURL(url);
   };
 
-  if (currentPage === 'home') {
-    return (
-      <HomePage 
-        onNavigate={setCurrentPage} 
-        bills={bills}
-      />
-    );
-  }
+  if (loading) return <div className="loading">Loading bills...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
-    <CategoryPage 
-      category={currentPage}
-      bills={bills}
-      onAddBill={addBill}
-      onStatusChange={updateStatus}
-      onDelete={deleteBill}
-      onDownloadReceipt={downloadReceipt}
-      onBack={() => setCurrentPage('home')}
-    />
+    <div className="bills-container">
+      {notification.show && (
+        <div className={`notification ${notification.type}`}>
+          {notification.message}
+          <button onClick={() => setNotification({ show: false, message: '', type: '' })}>×</button>
+        </div>
+      )}
+
+      {currentPage === 'home' ? (
+        <HomePage 
+          onNavigate={setCurrentPage} 
+          bills={bills} 
+        />
+      ) : (
+        <CategoryPage 
+          category={currentPage}
+          bills={bills}
+          onAddBill={addBillHandler}
+          onEdit={editBillHandler}
+          onStatusChange={updateStatusHandler}
+          onDelete={deleteBillHandler}
+          onDownloadReceipt={downloadReceipt}
+          onBack={() => setCurrentPage('home')}
+          editingBill={editingBill}
+          setEditingBill={setEditingBill}
+        />
+      )}
+    </div>
   );
 };
 
-export default App;
+export default Bills;

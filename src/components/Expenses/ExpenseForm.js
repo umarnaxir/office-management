@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X, Calculator, Calendar, Tag, FileText, DollarSign } from 'lucide-react';
-import { useCreateExpenses } from '../../hooks/useCreateExpenses';
+import { useCreateExpenses } from '../../hooks/Expenses/useCreateExpenses';
 
 const ExpenseForm = ({ onSave, preSelectedCategory = '' }) => {
   const [formData, setFormData] = useState({

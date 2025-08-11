@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, DollarSign, FileText, User, Zap, Wifi } from 'lucide-react';
 
-const BillForm = ({ onSave, category, onCancel }) => {
+const BillForm = ({ 
+  category, 
+  onSave, 
+  onCancel, 
+  editingBill 
+}) => {
   const [formData, setFormData] = useState({
     amount: '',
     dueDate: '',
@@ -8,36 +14,57 @@ const BillForm = ({ onSave, category, onCancel }) => {
     provider: '',
     accountNumber: '',
     units: '',
-    rate: '',
     salaryMonth: '',
     workDays: '',
     otherType: ''
   });
 
-  const handleSubmit = () => {
-    if (!formData.amount || !formData.dueDate) {
-      alert('Please fill in required fields');
-      return;
+  const [formErrors, setFormErrors] = useState({});
+
+  useEffect(() => {
+    if (editingBill) {
+      setFormData({
+        amount: editingBill.amount.toString(),
+        dueDate: editingBill.dueDate.split('T')[0],
+        description: editingBill.description || '',
+        provider: editingBill.provider || '',
+        accountNumber: editingBill.accountNumber || '',
+        units: editingBill.units || '',
+        salaryMonth: editingBill.salaryMonth || '',
+        workDays: editingBill.workDays || '',
+        otherType: editingBill.otherType || ''
+      });
     }
-    
-    onSave({
+  }, [editingBill]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (formErrors[name]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.amount || isNaN(formData.amount)) errors.amount = 'Valid amount is required';
+    if (!formData.dueDate) errors.dueDate = 'Due date is required';
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    const billData = {
       ...formData,
       category,
-      createdAt: new Date().toISOString()
-    });
-    
-    setFormData({
-      amount: '',
-      dueDate: '',
-      description: '',
-      provider: '',
-      accountNumber: '',
-      units: '',
-      rate: '',
-      salaryMonth: '',
-      workDays: '',
-      otherType: ''
-    });
+      amount: parseFloat(formData.amount),
+      status: editingBill ? editingBill.status : 'unpaid'
+    };
+
+    onSave(billData);
   };
 
   const renderCategoryFields = () => {
@@ -45,75 +72,78 @@ const BillForm = ({ onSave, category, onCancel }) => {
       case 'electricity':
         return (
           <>
-            <input
-              type="text"
-              placeholder="Electricity Provider"
-              value={formData.provider}
-              onChange={(e) => setFormData({...formData, provider: e.target.value})}
-            />
-            <input
-              type="text"
-              placeholder="Account Number"
-              value={formData.accountNumber}
-              onChange={(e) => setFormData({...formData, accountNumber: e.target.value})}
-            />
-            <input
-              type="number"
-              placeholder="Units Consumed"
-              value={formData.units}
-              onChange={(e) => setFormData({...formData, units: e.target.value})}
-            />
-            <input
-              type="number"
-              step="0.01"
-              placeholder="Rate per Unit"
-              value={formData.rate}
-              onChange={(e) => setFormData({...formData, rate: e.target.value})}
-            />
+            <div className="form-group">
+              <label><Zap size={16} /> Provider</label>
+              <input
+                type="text"
+                name="provider"
+                value={formData.provider}
+                onChange={handleChange}
+                placeholder="Electricity provider"
+              />
+            </div>
+            <div className="form-group">
+              <label>Units Consumed</label>
+              <input
+                type="number"
+                name="units"
+                value={formData.units}
+                onChange={handleChange}
+                placeholder="Units"
+              />
+            </div>
           </>
         );
       case 'wifi':
         return (
-          <>
+          <div className="form-group">
+            <label><Wifi size={16} /> Provider</label>
             <input
               type="text"
-              placeholder="Internet Provider"
+              name="provider"
               value={formData.provider}
-              onChange={(e) => setFormData({...formData, provider: e.target.value})}
+              onChange={handleChange}
+              placeholder="Internet provider"
             />
-            <input
-              type="text"
-              placeholder="Account Number"
-              value={formData.accountNumber}
-              onChange={(e) => setFormData({...formData, accountNumber: e.target.value})}
-            />
-          </>
+          </div>
         );
       case 'salary':
         return (
           <>
-            <input
-              type="text"
-              placeholder="Salary Month (e.g., January 2024)"
-              value={formData.salaryMonth}
-              onChange={(e) => setFormData({...formData, salaryMonth: e.target.value})}
-            />
-            <input
-              type="number"
-              placeholder="Work Days"
-              value={formData.workDays}
-              onChange={(e) => setFormData({...formData, workDays: e.target.value})}
-            />
+            <div className="form-group">
+              <label><User size={16} /> Salary Month</label>
+              <input
+                type="text"
+                name="salaryMonth"
+                value={formData.salaryMonth}
+                onChange={handleChange}
+                placeholder="Month and year (e.g., January 2025)"
+              />
+            </div>
+            <div className="form-group">
+              <label>Work Days</label>
+              <input
+                type="number"
+                name="workDays"
+                value={formData.workDays}
+                onChange={handleChange}
+                placeholder="Number of work days"
+              />
+            </div>
           </>
         );
       case 'others':
         return (
-          <input
-            type="text"
-            placeholder="Bill Type"
-            value={formData.otherType}
-            onChange={(e) => setFormData({...formData, otherType: e.target.value})}
-          />
+          <div className="form-group">
+            <label><FileText size={16} /> Bill Type</label>
+            <input
+              type="text"
+              name="otherType"
+              value={formData.otherType}
+              onChange={handleChange}
+              placeholder="Type of bill"
+            />
+          </div>
         );
       default:
         return null;
@@ -121,40 +151,64 @@ const BillForm = ({ onSave, category, onCancel }) => {
   };
 
   return (
-    <div className="bill-form">
-      <h3>Add New {category.charAt(0).toUpperCase() + category.slice(1)} Bill</h3>
-      <div>
+    <div className="bill-form-container">
+      <h2>{editingBill ? 'Edit Bill' : 'Add New Bill'}</h2>
+      <form onSubmit={handleSubmit}>
         <div className="form-row">
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Amount *"
-            value={formData.amount}
-            onChange={(e) => setFormData({...formData, amount: e.target.value})}
-            required
-          />
-          <input
-            type="date"
-            placeholder="Due Date *"
-            value={formData.dueDate}
-            onChange={(e) => setFormData({...formData, dueDate: e.target.value})}
-            required
-          />
+          <div className={`form-group ${formErrors.amount ? 'error' : ''}`}>
+            <label><DollarSign size={16} /> Amount (₹)</label>
+            <input
+              type="number"
+              name="amount"
+              step="0.01"
+              value={formData.amount}
+              onChange={handleChange}
+              placeholder="0.00"
+              required
+            />
+            {formErrors.amount && <span className="error-message">{formErrors.amount}</span>}
+          </div>
+          <div className={`form-group ${formErrors.dueDate ? 'error' : ''}`}>
+            <label><Calendar size={16} /> Due Date</label>
+            <input
+              type="date"
+              name="dueDate"
+              value={formData.dueDate}
+              onChange={handleChange}
+              required
+            />
+            {formErrors.dueDate && <span className="error-message">{formErrors.dueDate}</span>}
+          </div>
         </div>
-        
+
         {renderCategoryFields()}
-        
-        <textarea
-          placeholder="Description/Notes"
-          value={formData.description}
-          onChange={(e) => setFormData({...formData, description: e.target.value})}
-        />
-        
-        <div className="form-buttons">
-          <button onClick={handleSubmit} className="btn-primary">Add Bill</button>
-          <button onClick={onCancel} className="btn-secondary">Cancel</button>
+
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Additional notes"
+          />
         </div>
-      </div>
+
+        <div className="form-actions">
+          <button 
+            type="button" 
+            onClick={onCancel}
+            className="btn-secondary"
+          >
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            className="btn-primary"
+          >
+            {editingBill ? 'Update Bill' : 'Save Bill'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

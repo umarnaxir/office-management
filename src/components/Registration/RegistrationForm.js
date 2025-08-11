@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { TextInput } from "../Inputs/TextInput";
 import PasswordInput from "../Inputs/PasswordInput";
 import { SelectInput } from "../Inputs/SelectInput";
-import { useAddEmployees } from "@/hooks/useAddEmployees";
+import { useAddEmployees } from "@/hooks/Employees/useAddEmployees";
 
 const initialValues = {
   employeeId: "",

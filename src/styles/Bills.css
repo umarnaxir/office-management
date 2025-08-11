@@ -861,3 +861,164 @@ body {
     padding: 0;
   }
 }
+/* Notification System */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.notification.success {
+  background: #4CAF50;
+}
+
+.notification.error {
+  background: #f44336;
+}
+
+.notification button {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Loading and Error States */
+.loading, .error {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.error {
+  color: #f44336;
+}
+
+/* Form Styling */
+.bill-form-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 0.85rem;
+}
+
+/* Bill Card Styling */
+.bill-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.bill-card.paid {
+  border-left: 4px solid #4CAF50;
+}
+
+.bill-card.unpaid {
+  border-left: 4px solid #FF9800;
+}
+
+.bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bill-amount {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.bill-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.paid-icon {
+  color: #4CAF50;
+}
+
+.unpaid-icon {
+  color: #FF9800;
+}
+
+/* Button Styling */
+.btn-primary {
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.status-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.paid-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.unpaid-btn {
+  background: #FF9800;
+  color: white;
+}

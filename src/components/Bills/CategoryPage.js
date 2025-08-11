@@ -3,7 +3,18 @@ import { Zap, Wifi, User, FileText } from 'lucide-react';
 import BillForm from './BillForm';
 import BillList from './BillList';
 
-const CategoryPage = ({ category, bills, onAddBill, onStatusChange, onDelete, onDownloadReceipt, onBack }) => {
+const CategoryPage = ({ 
+  category, 
+  bills, 
+  onAddBill, 
+  onEdit,
+  onStatusChange, 
+  onDelete, 
+  onDownloadReceipt, 
+  onBack,
+  editingBill,
+  setEditingBill
+}) => {
   const [showForm, setShowForm] = useState(false);
 
   const categoryInfo = {
@@ -16,6 +27,18 @@ const CategoryPage = ({ category, bills, onAddBill, onStatusChange, onDelete, on
   const info = categoryInfo[category];
   const IconComponent = info.icon;
 
+  const handleSave = async (billData) => {
+    const isEditMode = !!editingBill;
+    const success = isEditMode 
+      ? await onEdit({ ...billData, id: editingBill.id }) 
+      : await onAddBill(billData);
+
+    if (success) {
+      setEditingBill(null);
+      setShowForm(false);
+    }
+  };
+
   return (
     <div className="category-page">
       <div className="category-header">
@@ -27,21 +50,25 @@ const CategoryPage = ({ category, bills, onAddBill, onStatusChange, onDelete, on
           <h1>{info.title}</h1>
         </div>
         <button 
-          onClick={() => setShowForm(!showForm)} 
+          onClick={() => {
+            setEditingBill(null);
+            setShowForm(!showForm);
+          }} 
           className="btn-primary"
         >
-          {showForm ? 'Cancel' : '+ Add Bill'}
+          {showForm || editingBill ? 'Cancel' : '+ Add Bill'}
         </button>
       </div>
 
-      {showForm && (
+      {(showForm || editingBill) && (
         <BillForm 
           category={category}
-          onSave={(bill) => {
-            onAddBill(bill);
+          onSave={handleSave}
+          onCancel={() => {
+            setEditingBill(null);
             setShowForm(false);
           }}
-          onCancel={() => setShowForm(false)}
+          editingBill={editingBill}
         />
       )}
 
@@ -51,6 +78,10 @@ const CategoryPage = ({ category, bills, onAddBill, onStatusChange, onDelete, on
         onStatusChange={onStatusChange}
         onDelete={onDelete}
         onDownloadReceipt={onDownloadReceipt}
+        setEditingBill={(bill) => {
+          setEditingBill(bill);
+          setShowForm(true);
+        }}
       />
     </div>
   );

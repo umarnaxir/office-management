@@ -9,7 +9,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { fetchReimbursements, deleteReimbursement } from '../../services/reimburseServices';
-import { useUpdateReimburse } from '../../hooks/useUpdateReimburse';
+import { useUpdateReimburse } from '../../hooks/Reimbusement/useUpdateReimburse';
 
 const ReimbursementList = ({ setCurrentView }) => {
   const [reimbursements, setReimbursements] = useState([]);

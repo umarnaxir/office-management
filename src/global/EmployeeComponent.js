@@ -1,6 +1,6 @@
 "use client";
 import { addEmployee,  } from "../services/employeeService";
-import {useEmployees}from "../hooks/useEmployees"
+import {useEmployees}from "../hooks/Employees/useEmployees"
 
 export default function EmployeeComponent() {
   const {employees, loading}=useEmployees()

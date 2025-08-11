@@ -14,6 +14,14 @@ const HomePage = ({ onNavigate, bills }) => {
     { name: 'Others', icon: FileText, key: 'others', color: '#9C27B0' }
   ];
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
+
   return (
     <div className="home-page">
       <div className="header">
@@ -22,7 +30,6 @@ const HomePage = ({ onNavigate, bills }) => {
       </div>
 
       <div className="stats-grid">
-        {/* Total Bills Card */}
         <div className="stat-card">
           <div className="stat-icon">
             <BarChart3 size={24} />
@@ -33,7 +40,6 @@ const HomePage = ({ onNavigate, bills }) => {
           </div>
         </div>
 
-        {/* Unpaid Bills Card */}
         <div className="stat-card unpaid">
           <div className="stat-icon">
             <Clock size={24} />
@@ -44,7 +50,6 @@ const HomePage = ({ onNavigate, bills }) => {
           </div>
         </div>
 
-        {/* Paid Bills Card */}
         <div className="stat-card paid">
           <div className="stat-icon">
             <CheckCircle size={24} />
@@ -55,22 +60,16 @@ const HomePage = ({ onNavigate, bills }) => {
           </div>
         </div>
 
-        {/* Total Amount Card - Now same size as others */}
-        <div className="stat-card bill">
+        <div className="stat-card content">
           <div className="stat-icon">
             <DollarSign size={24} />
           </div>
           <div className="stat-content">
-            <h3>₹{totalAmount.toLocaleString()}</h3>
+            <h3>{formatCurrency(totalAmount)}</h3>
             <p>Total Amount</p>
           </div>
         </div>
       </div>
-
-    <div className="header">
-        <h3>Add Bills</h3>
-        {/* <p>Add all your bills here</p> */}
-    </div>
 
       <div className="categories-grid">
         {categories.map(category => {
@@ -90,23 +89,6 @@ const HomePage = ({ onNavigate, bills }) => {
             </div>
           );
         })}
-      </div>
-
-      <div className="recent-bills">
-        <h2>Recent Bills</h2>
-        {bills.slice(-3).reverse().map(bill => (
-          <div key={bill.id} className="recent-bill-item">
-            <div className="bill-info">
-              <span className="bill-type">{bill.category.toUpperCase()}</span>
-              <span className="bill-description">{bill.description || bill.provider || 'Bill'}</span>
-            </div>
-            <div className="bill-amount">₹{bill.amount}</div>
-            <div className={`bill-status ${bill.status}`}>{bill.status}</div>
-          </div>
-        ))}
-        {bills.length === 0 && (
-          <p className="no-bills">No bills added yet. Start by adding your first bill!</p>
-        )}
       </div>
     </div>
   );

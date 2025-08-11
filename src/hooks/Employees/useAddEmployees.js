@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {addEmployee}from "../services/employeeService"
+import {addEmployee}from "../../services/employeeService"
 
 export const useAddEmployees = () => {
   const [loading, setLoading] = useState(false);
