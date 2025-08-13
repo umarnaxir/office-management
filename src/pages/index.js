@@ -37,7 +37,7 @@ const Dashboard = () => {
             </p>
           </header>
           <div className="dashboard-grid">
-            <Link href="/EmployeeManagement" className="dashboard-link">
+            <Link href="/employeeManagement" className="dashboard-link">
               <div className="dashboard-card employees-card">
                 <Users size={48} className="card-icon icon-blue" />
                 <div className="card-content">
@@ -46,7 +46,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/OfferLetter" className="dashboard-link">
+            <Link href="/officeLetters" className="dashboard-link">
               <div className="dashboard-card offer-letter-card">
                 <FileText size={48} className="card-icon icon-green" />
                 <div className="card-content">
@@ -55,7 +55,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/Attendance" className="dashboard-link">
+            <Link href="/attendance" className="dashboard-link">
               <div className="dashboard-card attendance-card">
                 <Calendar size={48} className="card-icon icon-purple" />
                 <div className="card-content">
@@ -64,7 +64,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/Reimbursements" className="dashboard-link">
+            <Link href="/reimbursements" className="dashboard-link">
               <div className="dashboard-card reimbursements-card">
                 <DollarSign size={48} className="card-icon icon-yellow" />
                 <div className="card-content">
@@ -73,7 +73,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/Payslips" className="dashboard-link">
+            <Link href="/payslips" className="dashboard-link">
               <div className="dashboard-card payslips-card">
                 <CreditCard size={48} className="card-icon icon-pink" />
                 <div className="card-content">
@@ -82,7 +82,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/DocumentManagement" className="dashboard-link">
+            <Link href="/documentManagement" className="dashboard-link">
               <div className="dashboard-card document-management-card">
                 <FolderOpen size={48} className="card-icon icon-indigo" />
                 <div className="card-content">
@@ -91,7 +91,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/Expenses" className="dashboard-link">
+            <Link href="/expenses" className="dashboard-link">
               <div className="dashboard-card expense-categories-card">
                 <PieChart size={48} className="card-icon icon-red" />
                 <div className="card-content">
@@ -100,7 +100,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/Bills" className="dashboard-link">
+            <Link href="/bills" className="dashboard-link">
               <div className="dashboard-card electricity-bills-card">
                 <Zap size={48} className="card-icon icon-orange" />
                 <div className="card-content">
@@ -109,7 +109,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-            <Link href="/LeaveTracker" className="dashboard-link">
+            <Link href="/leaveTracker" className="dashboard-link">
               <div className="dashboard-card leave-tracker-card">
                 <Plane size={48} className="card-icon icon-teal" />
                 <div className="card-content">
@@ -121,7 +121,7 @@ const Dashboard = () => {
           </div>
           {/* Expense Reminder */}
           <div className="expense-reminder-container">
-            <Link href="/ExpenseCategories" className="dashboard-link">
+            <Link href="/expenses" className="dashboard-link">
               <div className="expense-reminder">
                 <Lightbulb size={48} className="reminder-icon" />
                 <div className="reminder-content">

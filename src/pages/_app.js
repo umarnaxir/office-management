@@ -16,6 +16,7 @@ import '../styles/Attendance.css';
 import '../styles/Documents.css';
 import '../styles/TestPage.module.css';
 import '../styles/auth-styles.css';
+import '../styles/OfficeLetters.css'
 
 import { ThemeProvider } from '../global/Theme';
 

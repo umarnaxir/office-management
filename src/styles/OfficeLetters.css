@@ -1,0 +1,688 @@
+/* Office Letters Main Container */
+.ol-office-letters-container {
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Home Page Styles */
+.ol-home-office-letters {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.ol-header-section {
+  text-align: center;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+.ol-main-title {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+}
+
+.ol-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.95;
+  margin: 0;
+  font-weight: 400;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Cards Container */
+.ol-cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 20px 0;
+}
+
+/* Letter Cards */
+.ol-letter-card {
+  background: white;
+  border-radius: 20px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  border: 2px solid transparent;
+  transform-origin: center;
+}
+
+.ol-letter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--card-color), var(--card-color-light));
+  transition: height 0.3s ease;
+}
+
+.ol-letter-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  border-color: var(--card-color);
+}
+
+.ol-letter-card:hover::before {
+  height: 8px;
+}
+
+.ol-letter-card:active {
+  transform: translateY(-8px) scale(1.01);
+}
+
+/* Card Color Variants */
+.ol-letter-card.blue {
+  --card-colorEndianness: #3b82f6;
+  --card-color-light: #60a5fa;
+  --card-bg: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.ol-letter-card.green {
+  --card-color: #10b981;
+  --card-color-light: #34d399;
+  --card-bg: linear-gradient(135deg, #10b981, #047857);
+}
+
+.ol-letter-card.orange {
+  --card-color: #f59e0b;
+  --card-color-light: #fbbf24;
+  --card-bg: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.ol-letter-card.purple {
+  --card-color: #8b5cf6;
+  --card-color-light: #a78bfa;
+  --card-bg: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.ol-letter-card.teal {
+  --card-color: #14b8a6;
+  --card-color-light: #5eead4;
+  --card-bg: linear-gradient(135deg, #14b8a6, #0f766e);
+}
+
+.ol-letter-card.yellow {
+  --card-color: #f59e0b;
+  --card-color-light: #fcd34d;
+  --card-bg: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.ol-letter-card.indigo {
+  --card-color: #6366f1;
+  --card-color-light: #818cf8;
+  --card-bg: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.ol-letter-card.red {
+  --card-color: #ef4444;
+  --card-color-light: #f87171;
+  --card-bg: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.ol-letter-card.pink {
+  --card-color: #ec4899;
+  --card-color-light: #f472b6;
+  --card-bg: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+/* Card Header */
+.ol-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 25px 15px 25px;
+  background: var(--card-bg);
+  color: white;
+  position: relative;
+}
+
+.ol-card-icon {
+  padding: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.ol-letter-card:hover .ol-card-icon {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+}
+
+.ol-card-arrow {
+  opacity: 0;
+  transition: all 0.3s ease;
+  padding: 8px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+}
+
+.ol-letter-card:hover .ol-card-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* Card Content */
+.ol-card-content {
+  flex-grow: 1;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ol-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.ol-card-description {
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Card Footer */
+.ol-card-footer {
+  padding: 0 25px 25px 25px;
+}
+
+.ol-card-action {
+  display: inline-flex;
+  align-items: center;
+  color: var(--card-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.ol-letter-card:hover .ol-card-action {
+  opacity: 1;
+}
+
+/* Letter View Styles */
+.ol-letter-view {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.ol-view-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ol-back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.ol-back-button:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateX(-3px);
+}
+
+.ol-view-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.ol-letter-content {
+  padding: 40px;
+}
+
+/* Coming Soon Styles */
+.ol-coming-soon {
+  text-align: center;
+  padding: 100px 40px;
+  color: #6b7280;
+}
+
+.ol-coming-soon h3 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.ol-coming-soon p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+/* Form Styles */
+.ol-offer-letter-form {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 40px;
+  border-radius: 16px;
+  margin-bottom: 40px;
+  border: 1px solid #e2e8f0;
+}
+
+.ol-offer-letter-form h2 {
+  color: #1f2937;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.ol-form-group {
+  margin-bottom: 25px;
+}
+
+.ol-form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+}
+
+.ol-form-group input {
+  width: 100%;
+  padding: 15px 18px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: white;
+}
+
+.ol-form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.ol-form-actions {
+  margin-top: 30px;
+}
+
+.ol-form-actions button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 35px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.ol-form-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Table Styles */
+.ol-offer-letter-list {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.ol-offer-letter-list h2 {
+  color: #1f2937;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 30px 30px 0 30px;
+}
+
+.ol-table-offer-letter {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ol-table-offer-letter th {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 20px;
+  text-align: left;
+  font-weight: 700;
+  color: #374151;
+  border-bottom: 2px solid #e5e7eb;
+  font-size: 1rem;
+}
+
+.ol-table-offer-letter td {
+  padding: 20px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.ol-table-offer-letter tr:hover {
+  background: #f9fafb;
+}
+
+.ol-table-offer-letter button {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.ol-table-offer-letter button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .ol-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  .ol-letter-card {
+    min-height: 200px;
+  }
+
+  .ol-main-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ol-office-letters-container {
+    padding: 15px;
+  }
+
+  .ol-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .ol-letter-card {
+    min-height: 100px;
+    transition: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .ol-letter-card:hover {
+    transform: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: transparent;
+  }
+
+  .ol-letter-card:hover::before {
+    height: 6px;
+  }
+
+  .ol-card-header {
+    padding: 15px;
+    justify-content: start;
+  }
+
+  .ol-card-icon {
+    padding: 10px;
+  }
+
+  .ol-card-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ol-card-arrow {
+    display: none;
+  }
+
+  .ol-letter-card:hover .ol-card-icon {
+    background: rgba(255,255,255,0.2);
+    transform: none;
+  }
+
+  .ol-letter-card:hover .ol-card-arrow {
+    opacity: 0;
+  }
+
+  .ol-card-content {
+    padding: 10px 15px;
+    align-items: center;
+  }
+
+  .ol-card-title {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .ol-card-description {
+    display: none;
+  }
+
+  .ol-card-footer {
+    display: none;
+  }
+
+  .ol-main-title {
+    font-size: 2rem;
+  }
+
+  .ol-subtitle {
+    font-size: 1rem;
+  }
+
+  .ol-view-header {
+    padding: 25px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .ol-view-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .ol-letter-content {
+    padding: 25px;
+  }
+
+  .ol-offer-letter-form {
+    padding: 25px;
+  }
+
+  .ol-table-offer-letter th,
+  .ol-table-offer-letter td {
+    padding: 15px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ol-office-letters-container {
+    padding: 10px;
+  }
+
+  .ol-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .ol-letter-card {
+    min-height: 80px;
+  }
+
+  .ol-card-header {
+    padding: 10px;
+  }
+
+  .ol-card-icon {
+    padding: 6px;
+  }
+
+  .ol-card-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ol-card-content {
+    padding: 8px;
+  }
+
+  .ol-card-title {
+    font-size: 0.8rem;
+  }
+
+  .ol-main-title {
+    font-size: 1.5rem;
+  }
+
+  .ol-subtitle {
+    font-size: 1rem;
+  }
+
+  .ol-view-header {
+    padding: 20px;
+  }
+
+  .ol-view-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .ol-letter-content {
+    padding: 20px;
+  }
+
+  .ol-offer-letter-form {
+    padding: 20px;
+  }
+
+  .ol-table-offer-letter th,
+  .ol-table-offer-letter td {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+  }
+
+  .ol-coming-soon {
+    padding: 60px 20px;
+  }
+
+  .ol-coming-soon h3 {
+    font-size: 1.8rem;
+  }
+
+  .ol-coming-soon p {
+    font-size: 1rem;
+  }
+}
+
+/* Focus and Accessibility */
+.ol-letter-card:focus {
+  outline: 3px solid rgba(102, 126, 234, 0.5);
+  outline-offset: 2px;
+}
+
+.ol-letter-card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.ol-letter-card {
+  animation: slideInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.ol-letter-card:nth-child(1) { animation-delay: 0.1s; }
+.ol-letter-card:nth-child(2) { animation-delay: 0.2s; }
+.ol-letter-card:nth-child(3) { animation-delay: 0.3s; }
+.ol-letter-card:nth-child(4) { animation-delay: 0.4s; }
+.ol-letter-card:nth-child(5) { animation-delay: 0.5s; }
+.ol-letter-card:nth-child(6) { animation-delay: 0.6s; }
+.ol-letter-card:nth-child(7) { animation-delay: 0.7s; }
+.ol-letter-card:nth-child(8) { animation-delay: 0.8s; }
+.ol-letter-card:nth-child(9) { animation-delay: 0.9s; }
+
+.ol-header-section {
+  animation: slideInUp 0.8s ease forwards;
+}
+
+/* Loading and Interactive States */
+.ol-letter-card:hover .ol-card-icon {
+  animation: pulse 2s infinite;
+}
+
+/* Print Styles */
+@media print {
+  .ol-office-letters-container {
+    background: white;
+    padding: 0;
+  }
+
+  .ol-letter-card {
+    box-shadow: none;
+    border: 1px solid #e5e7eb;
+    break-inside: avoid;
+  }
+
+  .ol-card-arrow,
+  .ol-card-action {
+    display: none;
+  }
+}
