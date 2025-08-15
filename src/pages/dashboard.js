@@ -4,10 +4,8 @@ import {
   Users, FileText, Calendar, DollarSign, CreditCard, FolderOpen,
   PieChart, Zap, Plane, Lightbulb, Heart
 } from "lucide-react";
-import { useTheme } from '../global/Theme';
 
 const Dashboard = () => {
-  useTheme();
 
   return (
     <>

@@ -46,3 +46,4 @@ package.json
 .next/
 dist/
 *.log
+*.js text eol=lf
