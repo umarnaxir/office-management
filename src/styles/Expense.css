@@ -31,8 +31,9 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
   color: var(--expense-gray-800);
-  background-color: var(--expense-gray-50);
+  background-color: white !important;
   font-size: 14px;
+  margin-top: 6rem;
 }
 
 /* Compact Container */
@@ -56,7 +57,8 @@ body {
   color: var(--expense-gray-900);
 }
 
-.expense-back-btn, .expense-clear-all-btn {
+.expense-back-btn,
+.expense-clear-all-btn {
   border: none;
   padding: 6px 12px;
   border-radius: var(--expense-border-radius);
@@ -144,7 +146,8 @@ body {
   font-size: 13px;
 }
 
-.expense-input, .expense-select {
+.expense-input,
+.expense-select {
   width: 100%;
   padding: 8px 10px;
   border: 1px solid var(--expense-gray-300);
@@ -153,7 +156,8 @@ body {
   transition: var(--expense-transition);
 }
 
-.expense-input:focus, .expense-select:focus {
+.expense-input:focus,
+.expense-select:focus {
   outline: none;
   border-color: var(--expense-primary-color);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
@@ -181,7 +185,8 @@ body {
   grid-column: 1 / -1;
 }
 
-.expense-reset-btn, .expense-save-btn {
+.expense-reset-btn,
+.expense-save-btn {
   padding: 8px 16px;
   border-radius: var(--expense-border-radius);
   cursor: pointer;
@@ -625,63 +630,66 @@ body {
 
 /* Mobile Optimizations */
 @media (max-width: 640px) {
-  .expense-container, .expense-home {
+
+  .expense-container,
+  .expense-home {
     padding: 8px;
   }
-  
+
   .expense-stats-overview {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
-  
+
   .expense-form {
     grid-template-columns: 1fr;
   }
-  
+
   .expense-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .expense-header-actions {
     width: 100%;
   }
-  
+
   .expense-quick-action-btn {
     flex: 1;
     justify-content: center;
   }
-  
+
   .expense-form-actions {
     flex-direction: column;
   }
-  
-  .expense-reset-btn, .expense-save-btn {
+
+  .expense-reset-btn,
+  .expense-save-btn {
     width: 100%;
   }
-  
+
   /* Ensure 3 columns on mobile */
   .expense-category-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
   }
-  
+
   .expense-category-card {
     padding: 8px;
     min-height: 70px;
   }
-  
+
   .expense-category-icon {
     width: 28px;
     height: 28px;
     font-size: 12px;
   }
-  
+
   .expense-category-content h3 {
     font-size: 11px;
   }
-  
+
   .expense-category-amount {
     font-size: 10px;
   }

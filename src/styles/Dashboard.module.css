@@ -1,0 +1,435 @@
+/* styles/Dashboard.module.css */
+
+/* Floating Particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+  background: linear-gradient(45deg, #60a5fa, #a78bfa);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(240deg);
+  }
+}
+
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.pageDashboard {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboardHeader {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.dashboardTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+.dashboardSubtitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+  line-height: 1.6;
+  color: #000000; /* Light gray text */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.dashboardLink {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.dashboardCard {
+  border-radius: 24px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  animation: slideInUp 0.8s ease-out forwards;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white cards */
+  color: #000000; /* Black text on cards */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dashboardCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(74, 144, 226, 0.1),
+    transparent
+  );
+  transition: left 0.8s ease;
+}
+
+.dashboardCard:hover::before {
+  left: 100%;
+}
+
+.dashboardCard:hover {
+  transform: translateY(-16px) scale(1.03);
+  border-color: #4a90e2;
+  box-shadow: 0 16px 50px rgba(74, 144, 226, 0.25),
+    0 0 0 1px rgba(74, 144, 226, 0.3);
+}
+
+.dashboardCard:active {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.cardIcon {
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+.dashboardCard:hover .cardIcon {
+  transform: scale(1.1) rotateY(10deg);
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.cardContent h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  transition: color 0.3s ease;
+  line-height: 1.3;
+  color: #000000; /* Black text on cards */
+}
+
+.dashboardCard:hover .cardContent h3 {
+  color: #4a90e2;
+}
+
+.cardContent p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+  max-width: 280px;
+  color: #555555; /* Dark gray text on cards */
+}
+
+/* Icon Colors (unchanged) */
+.iconBlue {
+  color: #4a90e2;
+}
+.iconGreen {
+  color: #50c878;
+}
+.iconPurple {
+  color: #8b5cf6;
+}
+.iconYellow {
+  color: #f59e0b;
+}
+.iconPink {
+  color: #ec4899;
+}
+.iconIndigo {
+  color: #6366f1;
+}
+.iconRed {
+  color: #ef4444;
+}
+.iconOrange {
+  color: #f97316;
+}
+.iconTeal {
+  color: #14b8a6;
+}
+
+.expenseReminderContainer {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.expenseReminder {
+  padding: 2rem 3rem;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 600px;
+  animation: pulseReminder 4s infinite;
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  color: #000000; /* Black text */
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.1);
+}
+
+.expenseReminder:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 50px rgba(255, 255, 255, 0.15);
+}
+
+@keyframes pulseReminder {
+  0%,
+  100% {
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 16px 50px rgba(255, 255, 255, 0.15);
+  }
+}
+
+.reminderIcon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.expenseReminder:hover .reminderIcon {
+  transform: scale(1.1) rotate(10deg);
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1.1) rotate(10deg) translateY(0);
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg) translateY(-10px);
+  }
+}
+
+.reminderContent {
+  text-align: left;
+}
+
+.reminderTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #000000; /* Black text */
+}
+
+.reminderSubtitle {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  color: #555555; /* Dark gray text */
+}
+
+/* Animation delays for cards */
+.dashboardCard:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.dashboardCard:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dashboardCard:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.dashboardCard:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.dashboardCard:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.dashboardCard:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.dashboardCard:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.dashboardCard:nth-child(8) {
+  animation-delay: 0.8s;
+}
+.dashboardCard:nth-child(9) {
+  animation-delay: 0.9s;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile view modifications */
+@media (max-width: 768px) {
+  .pageDashboard {
+    padding: 1rem;
+  }
+
+  .dashboardTitle {
+    font-size: 2rem;
+  }
+
+  .dashboardSubtitle {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+
+  .dashboardGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .dashboardCard {
+    height: 120px;
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .cardIcon {
+    margin-bottom: 0.5rem;
+  }
+
+  .cardContent {
+    margin-bottom: 0;
+  }
+
+  .cardContent h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
+
+  .cardContent p {
+    display: none;
+  }
+
+  .expenseReminder {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .reminderContent {
+    text-align: center;
+  }
+
+  .reminderTitle {
+    font-size: 1rem;
+  }
+
+  .reminderSubtitle {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboardTitle {
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+
+  .dashboardSubtitle {
+    font-size: 1.1rem;
+  }
+
+  .dashboardGrid {
+    gap: 0.7rem;
+  }
+
+  .dashboardCard {
+    height: 100px;
+    padding: 0.8rem;
+    border-radius: 12px;
+  }
+
+  .cardIcon {
+    margin-bottom: 0.3rem;
+  }
+
+  .cardContent h3 {
+    font-size: 0.75rem;
+    line-height: 1.1;
+  }
+}
+
+/* Focus styles for accessibility */
+.dashboardCard:focus-within {
+  outline: 2px solid #004390;
+  outline-offset: 1px;
+}
