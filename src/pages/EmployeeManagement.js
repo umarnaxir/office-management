@@ -109,60 +109,66 @@ const Employees = () => {
 
   return (
     <div className="empmgmt-container">
-      <h1 className="empmgmt-page-title">Employee Management</h1>
+      <div className="empmgmt-header">
+        <h1 className="empmgmt-page-title">
+          Employee Management
+        </h1>
+        <p className="empmgmt-subtitle">Manage your team efficiently</p>
+      </div>
 
       {/* Dashboard Stats */}
       <div className="empmgmt-dashboard-grid">
-        <div className="empmgmt-stat-card empmgmt-stat-blue">
+        <div className="empmgmt-stat-card">
           <h3 className="empmgmt-stat-title">Total Employees</h3>
           <p className="empmgmt-stat-value">{stats.totalEmployees}</p>
         </div>
-        <div className="empmgmt-stat-card empmgmt-stat-green">
+        <div className="empmgmt-stat-card">
           <h3 className="empmgmt-stat-title">Total Interns</h3>
           <p className="empmgmt-stat-value">{stats.totalInterns}</p>
         </div>
-        <div className="empmgmt-stat-card empmgmt-stat-purple">
+        <div className="empmgmt-stat-card">
           <h3 className="empmgmt-stat-title">Departments</h3>
           <p className="empmgmt-stat-value">{Object.keys(stats.departments).length}</p>
-        </div>
-        <div className="empmgmt-stat-card empmgmt-stat-yellow">
-          <h3 className="empmgmt-stat-title">Average Salary</h3>
-          <p className="empmgmt-stat-value">
-            ${employees.length ? 
-              (employees.reduce((sum, emp) => sum + Number(emp.salary || 0), 0) / 
-              employees.length).toFixed(2) : 0}
-          </p>
         </div>
       </div>
 
       {/* Search and Filter */}
-      <div className="empmgmt-search-filter">
-        <input
-          type="text"
-          placeholder="Search employees..."
-          className="empmgmt-search-input"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <select
-          className="empmgmt-filter-select"
-          value={departmentFilter}
-          onChange={(e) => setDepartmentFilter(e.target.value)}
-        >
-          <option value="">All Departments</option>
-          {departments.map(dept => (
-            <option key={dept} value={dept}>{dept}</option>
-          ))}
-        </select>
-        <select
-          className="empmgmt-filter-select"
-          value={employeeTypeFilter}
-          onChange={(e) => setEmployeeTypeFilter(e.target.value)}
-        >
-          {employeeTypes.map(type => (
-            <option key={type.value} value={type.value}>{type.label}</option>
-          ))}
-        </select>
+      <div className="empmgmt-controls">
+        <div className="empmgmt-search-container">
+          <div className="empmgmt-search-wrapper">
+            <input
+              type="text"
+              placeholder="Search employees by name..."
+              className="empmgmt-search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+        
+        <div className="empmgmt-filters">
+          <select
+            className="empmgmt-filter-select"
+            value={departmentFilter}
+            onChange={(e) => setDepartmentFilter(e.target.value)}
+          >
+            <option value="">All Departments</option>
+            {departments.map(dept => (
+              <option key={dept} value={dept}>{dept}</option>
+            ))}
+          </select>
+          
+          <select
+            className="empmgmt-filter-select"
+            value={employeeTypeFilter}
+            onChange={(e) => setEmployeeTypeFilter(e.target.value)}
+          >
+            {employeeTypes.map(type => (
+              <option key={type.value} value={type.value}>{type.label}</option>
+            ))}
+          </select>
+        </div>
+        
         <button
           className="empmgmt-add-button"
           onClick={() => setShowForm(true)}
@@ -181,21 +187,28 @@ const Employees = () => {
 
       {/* Loading Indicator */}
       {(loading || creating || updating || deleting || promoting) && (
-        <div className="empmgmt-loading-indicator">Loading...</div>
+        <div className="empmgmt-loading-indicator">
+          <div className="empmgmt-loading-spinner"></div>
+          <span>Loading...</span>
+        </div>
       )}
 
       {/* Employee Form */}
       {showForm && (
-        <EmployeeForm
-          onSave={selectedEmployee ? handleUpdateEmployee : handleAddEmployee}
-          onCancel={() => {
-            setShowForm(false);
-            setSelectedEmployee(null);
-          }}
-          employee={selectedEmployee}
-          departments={departments}
-          loading={creating || updating}
-        />
+        <div className="empmgmt-modal-overlay">
+          <div className="empmgmt-modal">
+            <EmployeeForm
+              onSave={selectedEmployee ? handleUpdateEmployee : handleAddEmployee}
+              onCancel={() => {
+                setShowForm(false);
+                setSelectedEmployee(null);
+              }}
+              employee={selectedEmployee}
+              departments={departments}
+              loading={creating || updating}
+            />
+          </div>
+        </div>
       )}
 
       {/* Employee List */}

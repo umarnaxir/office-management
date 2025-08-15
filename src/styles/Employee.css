@@ -1,121 +1,264 @@
+/* Global Variables */
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-light: #e3f2fd;
+  --success-color: #10b981;
+  --success-hover: #059669;
+  --success-light: #e8f5e8;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-light: #fee2e2;
+  --warning-color: #f59e0b;
+  --warning-hover: #d97706;
+  --purple-color: #8b5cf6;
+  --purple-hover: #7c3aed;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: #111827;
+}
+
 /* General Container Styling */
 .empmgmt-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
+  min-height: 100vh;
 }
 
-/* Page Title */
-.empmgmt-page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1f2937;
+/* Header Section */
+.empmgmt-header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 40px;
 }
 
-/* Dashboard Grid */
+.empmgmt-page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.empmgmt-subtitle {
+  font-size: 1.125rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Dashboard Stats Grid */
 .empmgmt-dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  gap: 20px;
   margin-bottom: 32px;
 }
 
 .empmgmt-stat-card {
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #f8fafc;
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
   text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
 }
 
-.empmgmt-stat-blue {
-  background: #dbeafe;
-}
-
-.empmgmt-stat-green {
-  background: #d1fae5;
-}
-
-.empmgmt-stat-yellow {
-  background: #fef3c7;
+.empmgmt-stat-card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .empmgmt-stat-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1f2937;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-600);
   margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .empmgmt-stat-value {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--gray-900);
 }
 
-/* Search and Filter */
-.empmgmt-search-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+/* Controls Section */
+.empmgmt-controls {
+  background: #ffffff;
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
   margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e2e8f0;
+}
+
+.empmgmt-search-container {
+  margin-bottom: 20px;
+}
+
+.empmgmt-search-wrapper {
+  position: relative;
+  max-width: 400px;
 }
 
 .empmgmt-search-input {
-  flex: 1;
-  min-width: 200px;
-  padding: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius);
   font-size: 1rem;
+  background: white;
+  transition: border-color 0.2s ease;
 }
 
 .empmgmt-search-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.empmgmt-filters {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
 .empmgmt-filter-select {
-  padding: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  background: white;
+  cursor: pointer;
+  min-width: 150px;
 }
 
 .empmgmt-filter-select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--primary-color);
 }
 
 .empmgmt-add-button {
-  background: #3b82f6;
+  background: var(--success-color);
   color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .empmgmt-add-button:hover {
-  background: #2563eb;
+  background: var(--success-hover);
+}
+
+.empmgmt-add-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+/* Modal Overlay */
+.empmgmt-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.empmgmt-modal {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
 }
 
 /* Employee Form */
 .empmgmt-employee-form {
-  background: #f9fafb;
-  border-radius: 8px;
+  background: white;
+  border-radius: var(--border-radius-lg);
+}
+
+.empmgmt-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 24px;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--gray-50);
 }
 
 .empmgmt-form-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.empmgmt-close-button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--gray-500);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empmgmt-close-button:hover {
+  background: var(--gray-200);
+}
+
+.empmgmt-form {
+  padding: 24px;
+}
+
+.empmgmt-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
   margin-bottom: 16px;
 }
 
@@ -125,143 +268,520 @@
 
 .empmgmt-form-label {
   font-weight: 500;
-  color: #374151;
+  color: var(--gray-700);
+  margin-bottom: 6px;
   display: block;
-  margin-bottom: 4px;
+  font-size: 0.875rem;
 }
 
 .empmgmt-form-input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease;
+  background: white;
 }
 
 .empmgmt-form-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.empmgmt-form-input.error {
+  border-color: var(--danger-color);
+}
+
+.empmgmt-salary-input-wrapper {
+  position: relative;
+}
+
+.empmgmt-currency-symbol {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.empmgmt-salary-input {
+  padding-left: 32px !important;
+}
+
+.empmgmt-salary-display {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--gray-600);
+}
+
+.empmgmt-error-text {
+  color: var(--danger-color);
+  font-size: 0.75rem;
+  margin-top: 4px;
 }
 
 .empmgmt-form-actions {
   display: flex;
   gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-200);
 }
 
 .empmgmt-save-button {
-  background: #10b981;
+  background: var(--success-color);
   color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .empmgmt-save-button:hover {
-  background: #059669;
+  background: var(--success-hover);
+}
+
+.empmgmt-save-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
 }
 
 .empmgmt-cancel-button {
-  background: #ef4444;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-300);
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .empmgmt-cancel-button:hover {
-  background: #dc2626;
+  background: var(--gray-200);
 }
 
 /* Employee List */
 .empmgmt-employee-list {
-  background: #f9fafb;
-  border-radius: 8px;
+  background: #ffffff;
+  border-radius: var(--border-radius-lg);
   padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e2e8f0;
+}
+
+.empmgmt-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .empmgmt-list-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 16px;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.empmgmt-employee-count {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.empmgmt-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray-500);
+}
+
+.empmgmt-empty-state h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--gray-700);
+}
+
+.empmgmt-empty-state p {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+/* Table Container */
+.empmgmt-table-container {
+  overflow-x: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--gray-200);
 }
 
 .empmgmt-table-employee {
   width: 100%;
   border-collapse: collapse;
+  background: white;
 }
 
 .empmgmt-table-employee th,
 .empmgmt-table-employee td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 0.875rem;
 }
 
 .empmgmt-table-employee th {
-  background: #e5e7eb;
+  background: var(--gray-50);
   font-weight: 600;
-  color: #1f2937;
+  color: var(--gray-800);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-size: 0.75rem;
+}
+
+.empmgmt-sortable-header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.empmgmt-sortable-header:hover {
+  background: var(--gray-100);
+}
+
+.empmgmt-table-row {
+  transition: background-color 0.2s ease;
 }
 
 .empmgmt-table-row:hover {
-  background: #f3f4f6;
+  background: var(--gray-50);
+}
+
+.empmgmt-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.empmgmt-employee-avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.empmgmt-employee-name {
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.empmgmt-email-link {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.empmgmt-email-link:hover {
+  text-decoration: underline;
+}
+
+.empmgmt-department-badge {
+  display: inline-block;
+  background: var(--gray-100);
+  color: var(--gray-700);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.empmgmt-type-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.empmgmt-type-badge.intern {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.empmgmt-type-badge.fulltime {
+  background: var(--success-light);
+  color: var(--success-hover);
+}
+
+.empmgmt-salary-amount {
+  font-weight: 600;
+  color: var(--success-color);
+}
+
+.empmgmt-action-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .empmgmt-edit-button {
-  background: #3b82f6;
+  background: var(--primary-color);
   color: white;
+  border: none;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
   font-weight: 500;
-  margin-right: 8px;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .empmgmt-edit-button:hover {
-  background: #2563eb;
+  background: var(--primary-hover);
+}
+
+.empmgmt-edit-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
 }
 
 .empmgmt-delete-button {
-  background: #ef4444;
+  background: var(--danger-color);
   color: white;
+  border: none;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
   font-weight: 500;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .empmgmt-delete-button:hover {
-  background: #dc2626;
+  background: var(--danger-hover);
 }
 
-/* Responsive Adjustments */
+.empmgmt-delete-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.empmgmt-promote-button {
+  background: var(--purple-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.empmgmt-promote-button:hover {
+  background: var(--purple-hover);
+}
+
+.empmgmt-promote-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+/* Error Alert */
+.empmgmt-error-alert {
+  background: var(--danger-light);
+  color: var(--danger-hover);
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Loading Indicator */
+.empmgmt-loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.empmgmt-loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gray-200);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
-  .empmgmt-dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .empmgmt-search-filter {
-    flex-direction: column;
-  }
-
-  .empmgmt-table-employee th,
-  .empmgmt-table-employee td {
-    padding: 8px;
-    font-size: 0.9rem;
-  }
-
-  .empmgmt-employee-form {
+  .empmgmt-container {
     padding: 16px;
+  }
+  
+  .empmgmt-page-title {
+    font-size: 2rem;
+  }
+
+  /* Three cards in a row on mobile */
+  .empmgmt-dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .empmgmt-stat-card {
+    padding: 16px 8px;
+  }
+
+  .empmgmt-stat-value {
+    font-size: 1.5rem;
+  }
+
+  .empmgmt-stat-title {
+    font-size: 0.75rem;
+  }
+
+  .empmgmt-controls {
+    padding: 16px;
+  }
+
+  .empmgmt-filters {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .empmgmt-filter-select {
+    min-width: auto;
+  }
+
+  .empmgmt-form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .empmgmt-form-actions {
     flex-direction: column;
     gap: 8px;
   }
+
+  .empmgmt-table-container {
+    overflow-x: auto;
+  }
+
+  .empmgmt-table-employee th,
+  .empmgmt-table-employee td {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+
+  .empmgmt-action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .empmgmt-name-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .empmgmt-employee-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .empmgmt-page-title {
+    font-size: 1.75rem;
+  }
+
+  .empmgmt-modal-overlay {
+    padding: 10px;
+  }
+
+  .empmgmt-form-header {
+    padding: 16px;
+  }
+
+  .empmgmt-form {
+    padding: 16px;
+  }
+
+  .empmgmt-form-title {
+    font-size: 1.25rem;
+  }
+
+  /* Ensure 3 cards stay in row even on very small screens */
+  .empmgmt-dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .empmgmt-stat-card {
+    padding: 12px 6px;
+  }
+
+  .empmgmt-stat-value {
+    font-size: 1.25rem;
+  }
+
+  .empmgmt-stat-title {
+    font-size: 0.65rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .empmgmt-add-button,
+  .empmgmt-action-buttons {
+    display: none !important;
+  }
+}
+
+/* Focus styles for accessibility */
+.empmgmt-add-button:focus-visible,
+.empmgmt-edit-button:focus-visible,
+.empmgmt-delete-button:focus-visible,
+.empmgmt-promote-button:focus-visible,
+.empmgmt-save-button:focus-visible,
+.empmgmt-cancel-button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
